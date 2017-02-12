@@ -3,18 +3,16 @@
   "name": "Gentle Alerts",
   "version": "0.0.1",
 
-  "default_locale": "en",
   "description": "This extension intercepts browser alerts (the interruptive popups) and turns them into gentle modals",
   "icons": {},
 
   "author": "Albert Wang",
-  "background": {
-    "persistent": false
-  },
   "content_scripts": [{
-    "matches": "<all_urls>",
-    "js": "script.js"
+    "matches": ["<all_urls>"],
+    "js": ["bootstrap.js"]
   }],
   "homepage_url": "https://github.com/albertyw/gentle-alerts",
-  "offline_enabled": true
+  "offline_enabled": true,
+  "permissions": ["tabs"],
+  "web_accessible_resources": ["script.js"]
 }
