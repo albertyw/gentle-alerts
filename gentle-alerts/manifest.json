@@ -4,7 +4,12 @@
   "version": "0.1.0",
 
   "description": "Intercept browser alerts (the interruptive popups) and turn them into gentle modals.",
-  "icons": {},
+  "icons": {
+    "16": "img/icon16.png",
+    "32": "img/icon32.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
+  },
 
   "author": "Albert Wang",
   "content_scripts": [{
