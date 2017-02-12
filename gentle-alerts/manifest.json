@@ -3,7 +3,7 @@
   "name": "Gentle Alerts",
   "version": "0.1.0",
 
-  "description": "This extension intercepts browser alerts (the interruptive popups) and turns them into gentle modals",
+  "description": "Intercept browser alerts (the interruptive popups) and turn them into gentle modals.",
   "icons": {},
 
   "author": "Albert Wang",
