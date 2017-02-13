@@ -1,6 +1,8 @@
 Gentle Alerts
 =============
 
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/bcjaadnpjolbaginfighnpcdjmbeiahn.svg)](https://chrome.google.com/webstore/detail/gentle-alerts/bcjaadnpjolbaginfighnpcdjmbeiahn)
+
 Google chrome extension to convert alerts into gentle notifications
 
 I started this project after getting annoyed with Google Calendar's event
