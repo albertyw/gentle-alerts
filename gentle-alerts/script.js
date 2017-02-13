@@ -1,15 +1,14 @@
 var modalHTML = '\
-<div id="gentle-alerts-modal">\
-  <div id="gentle-alerts-modal-content">\
-    <!--<span class="close">&times;</span>-->\
-    <p id="gentle-alerts-modal-content-text"></p>\
-  </div>\
+<div id="gentle-alerts-modal-content">\
+  <!--<span class="close">&times;</span>-->\
+  <p id="gentle-alerts-modal-content-text"></p>\
 </div>';
 var alertQueue = [];
 
 // Create a modal from modalHTML and append to the bottom of the document
 function createModal(msg) {
     var span = document.createElement("span");
+    span.id = "gentle-alerts-modal";
     span.innerHTML = modalHTML;
     document.documentElement.appendChild(span);
     var modalContent = document.getElementById("gentle-alerts-modal-content-text");
