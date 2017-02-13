@@ -50,7 +50,7 @@ function registerModalClose() {
     window.onclick = function gentleAlertsOnclick(onclickEvent) {
         var modal = getModal();
         var closedModal = false;
-        if (onclickEvent.target == modal) {
+        if (onclickEvent.target === modal) {
             deleteModal();
             window.onclick = originalOnclick;
             closedModal = true;
