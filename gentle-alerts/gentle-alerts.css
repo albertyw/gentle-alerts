@@ -1,4 +1,4 @@
-.gentle-alerts-modal {
+#gentle-alerts-modal {
     display: none;
     position: fixed;
     z-index: 2147483647;
@@ -11,7 +11,7 @@
     background-color: rgba(0,0,0,0.4);
 }
 
-.gentle-alerts-modal-content {
+#gentle-alerts-modal-content {
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;

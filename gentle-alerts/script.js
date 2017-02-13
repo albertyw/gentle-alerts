@@ -1,8 +1,8 @@
 var modalHTML = '\
-<div class="gentle-alerts-modal">\
-  <div class="gentle-alerts-modal-content">\
+<div id="gentle-alerts-modal">\
+  <div id="gentle-alerts-modal-content">\
     <span class="close">&times;</span>\
-    <p>Some text in the Modal..</p>\
+    <p id="gentle-alerts-modal-content-text"></p>\
   </div>\
 </div>';
 
@@ -11,10 +11,8 @@ function createModal(msg) {
     var span = document.createElement("span");
     span.innerHTML = modalHTML;
     document.documentElement.appendChild(span);
-    var modal = getModal();
-    var modalContent = modal.getElementsByTagName("p")[0];
+    var modalContent = document.getElementById("gentle-alerts-modal-content-text");
     modalContent.textContent = msg;
-    return modal;
 }
 
 // Find and delete the modal
@@ -25,13 +23,14 @@ function deleteModal() {
 
 // Get the modal DOM element
 function getModal() {
-    var modal = document.getElementsByClassName("gentle-alerts-modal");
-    return modal[0];
+    var modal = document.getElementById("gentle-alerts-modal");
+    return modal;
 }
 
 // Create, set the modal content, and show it
 function generateModal(msg) {
-    var modal = createModal(msg);
+    createModal(msg);
+    var modal = getModal();
     modal.style.display = "block";
     registerModalClose();
 }
