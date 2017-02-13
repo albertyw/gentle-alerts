@@ -5,6 +5,7 @@ var modalHTML = '\
     <p id="gentle-alerts-modal-content-text"></p>\
   </div>\
 </div>';
+var alertQueue = [];
 
 // Create a modal from modalHTML and append to the bottom of the document
 function createModal(msg) {
@@ -28,7 +29,14 @@ function getModal() {
 }
 
 // Create, set the modal content, and show it
-function generateModal(msg) {
+function generateModal() {
+    if (getModal()) {
+        return;
+    }
+    var msg = alertQueue.shift();
+    if (msg === undefined) {
+        return;
+    }
     createModal(msg);
     var modal = getModal();
     modal.style.display = "block";
@@ -41,14 +49,24 @@ function registerModalClose() {
     var originalOnclick = window.onclick;
     window.onclick = function gentleAlertsOnclick(onclickEvent) {
         var modal = getModal();
+        var closedModal = false;
         if (onclickEvent.target == modal) {
             deleteModal();
             window.onclick = originalOnclick;
+            closedModal = true;
         }
         if (originalOnclick) {
             originalOnclick(onclickEvent);
         }
+        if (closedModal) {
+            generateModal();
+        }
     };
 }
 
-window.alert = generateModal;
+function gentleAlert(msg) {
+    alertQueue.push(msg);
+    generateModal();
+}
+
+window.alert = gentleAlert;
