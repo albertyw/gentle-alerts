@@ -7,6 +7,7 @@ var alertQueue = [];
 
 function Modal(msg){
     this.msg = msg;
+    this.modalElement = undefined;
 }
 
 // Create a modal from modalHTML and append to the bottom of the document
@@ -17,25 +18,24 @@ Modal.prototype.createModal = function createModal() {
     document.documentElement.appendChild(span);
     var modalContent = document.getElementById("gentle-alerts-modal-content-text");
     modalContent.textContent = this.msg;
-    var modal = this.getModal();
-    modal.style.display = "block";
+    this.getModal();
+    this.modalElement.style.display = "block";
 }
 
 // Find and delete the modal
 Modal.prototype.deleteModal = function deleteModal() {
-    var modal = this.getModal();
-    modal.parentNode.removeChild(modal);
+    modal.parentNode.removeChild(this.modalElement);
+    this.modalElement = undefined;
 }
 
 // Get the modal DOM element
 Modal.prototype.getModal = function getModal() {
-    var modal = document.getElementById("gentle-alerts-modal");
-    return modal;
+    this.modalElement = document.getElementById("gentle-alerts-modal");
 }
 
 // Create, set the modal content, and show it
 Modal.prototype.generateModal = function generateModal() {
-    if (this.getModal()) {
+    if (this.modalElement) {
         return;
     }
     var modal = alertQueue.shift();
