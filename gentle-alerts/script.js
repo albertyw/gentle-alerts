@@ -5,52 +5,57 @@ var modalHTML = '\
 </div>';
 var alertQueue = [];
 
+function Modal(msg){
+    this.msg = msg;
+}
+
 // Create a modal from modalHTML and append to the bottom of the document
-function createModal(msg) {
+Modal.prototype.createModal = function createModal() {
     var span = document.createElement("span");
     span.id = "gentle-alerts-modal";
     span.innerHTML = modalHTML;
     document.documentElement.appendChild(span);
     var modalContent = document.getElementById("gentle-alerts-modal-content-text");
-    modalContent.textContent = msg;
-    var modal = getModal();
+    modalContent.textContent = this.msg;
+    var modal = this.getModal();
     modal.style.display = "block";
 }
 
 // Find and delete the modal
-function deleteModal() {
-    var modal = getModal();
+Modal.prototype.deleteModal = function deleteModal() {
+    var modal = this.getModal();
     modal.parentNode.removeChild(modal);
 }
 
 // Get the modal DOM element
-function getModal() {
+Modal.prototype.getModal = function getModal() {
     var modal = document.getElementById("gentle-alerts-modal");
     return modal;
 }
 
 // Create, set the modal content, and show it
-function generateModal() {
-    if (getModal()) {
+Modal.prototype.generateModal = function generateModal() {
+    if (this.getModal()) {
         return;
     }
-    var msg = alertQueue.shift();
-    if (msg === undefined) {
+    var modal = alertQueue.shift();
+    if (modal === undefined) {
         return;
     }
-    createModal(msg);
-    registerModalClose();
+    modal.createModal();
+    this.registerModalClose();
 }
 
 // Set up an event to process closing the modal
-function registerModalClose() {
+Modal.prototype.registerModalClose = function registerModalClose() {
     // When the user clicks anywhere outside of the modal, close it
+    var self = this;
     var originalOnclick = window.onclick;
     window.onclick = function gentleAlertsOnclick(onclickEvent) {
-        var modal = getModal();
+        var modal = self.getModal();
         var closedModal = false;
         if (onclickEvent.target === modal) {
-            deleteModal();
+            self.deleteModal();
             window.onclick = originalOnclick;
             closedModal = true;
         }
@@ -58,14 +63,15 @@ function registerModalClose() {
             originalOnclick(onclickEvent);
         }
         if (closedModal) {
-            generateModal();
+            self.generateModal();
         }
     };
 }
 
 function gentleAlert(msg) {
-    alertQueue.push(msg);
-    generateModal();
+    var modal = new Modal(msg);
+    alertQueue.push(modal);
+    modal.generateModal();
 }
 
 window.alert = gentleAlert;
