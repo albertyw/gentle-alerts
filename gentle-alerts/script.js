@@ -13,6 +13,8 @@ function createModal(msg) {
     document.documentElement.appendChild(span);
     var modalContent = document.getElementById("gentle-alerts-modal-content-text");
     modalContent.textContent = msg;
+    var modal = getModal();
+    modal.style.display = "block";
 }
 
 // Find and delete the modal
@@ -37,8 +39,6 @@ function generateModal() {
         return;
     }
     createModal(msg);
-    var modal = getModal();
-    modal.style.display = "block";
     registerModalClose();
 }
 
