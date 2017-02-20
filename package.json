@@ -3,7 +3,9 @@
   "version": "0.2.0",
   "description": "Convert alerts into gentle notifications",
   "scripts": {
-    "test": "eslint gentle-alerts/script.js"
+    "test": "npm run eslint && npm run mocha",
+    "eslint": "eslint gentle-alerts/script.js",
+    "mocha": "mocha"
   },
   "repository": {
     "type": "git",
@@ -16,6 +18,7 @@
   },
   "homepage": "https://github.com/albertyw/gentle-alerts#readme",
   "devDependencies": {
-    "eslint": "^3.15.0"
+    "eslint": "^3.15.0",
+    "mocha": "^3.2.0"
   }
 }
