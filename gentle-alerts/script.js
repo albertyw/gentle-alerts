@@ -82,4 +82,6 @@ function gentleAlert(msg) {
     modal.queueMsg(msg);
 }
 
-window.alert = gentleAlert;
+if (typeof window !== 'undefined' && window.alert != 'undefined') {
+    window.alert = gentleAlert;
+}
