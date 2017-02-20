@@ -20,5 +20,5 @@ Run this and upload the zip file to the
 [chrome web store](https://chrome.google.com/webstore/developer/dashboard).
 
 ```
-zip -r gentle-alerts.zip gentle-alerts/
+git ls-files | grep gentle-alerts | xargs zip gentle-alerts.zip
 ```
