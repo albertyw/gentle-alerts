@@ -75,10 +75,11 @@ Modal.prototype.registerModalClose = function registerModalClose() {
     };
 }
 
-// eslint-disable-next-line no-unused-vars
 function gentleAlert(msg) {
     if (modal === undefined) {
         modal = new Modal();
     }
     modal.queueMsg(msg);
 }
+
+window.alert = gentleAlert;
