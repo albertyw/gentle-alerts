@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+v0.3.0
+------
+
+ - Added to NPM
+ - Bugfixes and refactors
+
+
 v0.2.0
 ------
 
