@@ -3,9 +3,8 @@
   "version": "0.2.0",
   "description": "Convert alerts into gentle notifications",
   "scripts": {
-    "test": "npm run eslint && npm run mocha",
-    "eslint": "eslint gentle-alerts/script.js",
-    "mocha": "mocha"
+    "test": "npm run eslint && mocha-phantomjs test/index.htm",
+    "eslint": "eslint gentle-alerts/script.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +20,7 @@
     "chai": "^3.5.0",
     "eslint": "^3.15.0",
     "jquery": "^3.1.1",
-    "mocha": "^3.2.0"
+    "mocha": "^3.2.0",
+    "mocha-phantomjs": "^4.1.0"
   }
 }
