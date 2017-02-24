@@ -1,16 +1,19 @@
 var expect = chai.expect;
 
+function resetModals() {
+    modal = undefined;
+    $("#gentle-alerts-modal").remove();
+}
+
 describe("modalHTML", function() {
+    beforeEach(resetModals);
     it("should be available", function() {
         expect(modalHTML).to.have.length.above(0);
     });
 });
 
 describe("Modal", function() {
-    beforeEach(function() {
-        modal = undefined;
-        $("#gentle-alerts-modal").remove();
-    });
+    beforeEach(resetModals);
     it("can be initialized", function() {
         var modal = new Modal();
         expect(modal.msgQueue).to.have.lengthOf(0);
@@ -19,10 +22,7 @@ describe("Modal", function() {
 });
 
 describe("alert", function() {
-    beforeEach(function() {
-        modal = undefined;
-        $("#gentle-alerts-modal").remove();
-    });
+    beforeEach(resetModals);
     it("can show modal", function() {
         alert("alert text");
         expect($("#gentle-alerts-modal-content-text").length).to.equal(1);
