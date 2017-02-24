@@ -3,8 +3,11 @@
   "version": "0.2.0",
   "description": "Convert alerts into gentle notifications",
   "scripts": {
-    "test": "npm run eslint && mocha-phantomjs test/index.htm",
-    "eslint": "eslint gentle-alerts/script.js"
+    "test": "npm run eslint && npm run test-bdd",
+    "eslint": "eslint gentle-alerts/script.js",
+    "test-bdd": "npm run istanbul-instrument && npm run mocha && istanbul report",
+    "istanbul-instrument": "istanbul instrument -i ./gentle-alerts -o ./instrumented",
+    "mocha": "mocha-phantomjs -k mocha-phantomjs-istanbul ./test/index.htm"
   },
   "repository": {
     "type": "git",
