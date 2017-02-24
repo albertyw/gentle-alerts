@@ -36,4 +36,18 @@ describe("alert", function() {
             done();
         });
     });
+    it("can queue and show two modals", function(done) {
+        alert("alert test 1");
+        alert("alert test 2");
+        expect($("#gentle-alerts-modal").length).to.equal(1);
+        expect($("#gentle-alerts-modal-content-text").text()).to.equal("alert test 1");
+        $.when($("#gentle-alerts-modal").trigger("click")).done(function(){
+            expect($("#gentle-alerts-modal").length).to.equal(1);
+            expect($("#gentle-alerts-modal-content-text").text()).to.equal("alert test 2");
+            $.when($("#gentle-alerts-modal").trigger("click")).done(function(){
+                expect($("#gentle-alerts-modal").length).to.equal(0);
+                done();
+            });
+        });
+    });
 });
