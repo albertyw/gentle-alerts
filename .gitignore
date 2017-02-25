@@ -60,3 +60,6 @@ typings/
 # Chrome extension ignores
 gentle-alerts.zip
 *.crx
+
+# Test files
+instrumented
