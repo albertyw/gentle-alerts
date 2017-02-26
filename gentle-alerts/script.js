@@ -56,23 +56,25 @@ Modal.prototype.generateModal = function generateModal() {
 
 // Set up an event to process closing the modal
 Modal.prototype.registerModalClose = function registerModalClose() {
-    // When the user clicks anywhere outside of the modal, close it
     var self = this;
-    var originalOnclick = window.onclick;
-    window.onclick = function gentleAlertsOnclick(onclickEvent) {
-        var closedModal = false;
-        if (onclickEvent.target === self.modalElement) {
-            self.deleteModal();
-            window.onclick = originalOnclick;
-            closedModal = true;
+    function isOnclick(onClickEvent) {
+        return onClickEvent.target == self.modalElement;
+    }
+    function generateEvent(onClickCorrect, windowEvent, originalCallback) {
+        return function eventCallback(eventObject) {
+            if (onClickCorrect(eventObject)) {
+                self.deleteModal();
+                window[windowEvent] = originalCallback;
+                self.generateModal();
+            }
+            originalCallback(eventObject);
         }
-        if (originalOnclick) {
-            originalOnclick(onclickEvent);
-        }
-        if (closedModal) {
-            self.generateModal();
-        }
-    };
+    }
+    function noOp() {
+        // Placeholder for when there is no built-in handler
+    }
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = generateEvent(isOnclick, 'onclick', window.onclick || noOp);
 }
 
 function gentleAlert(msg) {
