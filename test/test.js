@@ -50,4 +50,12 @@ describe("alert", function() {
             });
         });
     });
+    it("will not hide the modal when the modal itself is clicked", function(done) {
+        alert("alert text");
+        $.when($("#gentle-alerts-modal-content").trigger("click")).done(function(){
+            expect($("#gentle-alerts-modal-content-text").length).to.equal(1);
+            expect($("#gentle-alerts-modal-content-text").text()).to.equal("alert text");
+            done();
+        });
+    });
 });
