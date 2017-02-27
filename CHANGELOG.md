@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+v0.3.1
+------
+
+ - Add tests
+ - Refactors and optimizations
+
+
 v0.3.0
 ------
 
