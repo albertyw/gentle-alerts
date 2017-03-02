@@ -10,17 +10,26 @@ Gentle Alerts
 
 Google chrome extension to convert alerts into gentle notifications
 
+![Gentle Alerts Icon](gentle-alerts/img/icon.png)
+
 I started this project after getting annoyed with Google Calendar's event
 notifications.  They used to have nice soft notifications, but they broke it
 when they graduated their feature from google labs and they
 [haven't fixed it](https://productforums.google.com/forum/#!topic/calendar/aWfZBNKlNEQ).
 
+Testing
+-------
+
+```
+npm test
+```
+
 Packaging
 ---------
 
-Run this and upload the zip file to the
-[chrome web store](https://chrome.google.com/webstore/developer/dashboard).
+```
+npm package
+```
 
-```
-git ls-files | grep gentle-alerts | xargs zip gentle-alerts.zip
-```
+Upload the zip file to the
+[chrome web store](https://chrome.google.com/webstore/developer/dashboard).
