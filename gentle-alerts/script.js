@@ -1,8 +1,8 @@
-var modalHTML = '\
-<div id="gentle-alerts-modal-content">\
-  <!--<span class="close">&times;</span>-->\
-  <p id="gentle-alerts-modal-content-text"></p>\
-</div>';
+var modalHTML = "\
+<div id=\"gentle-alerts-modal-content\">\
+  <!--<span class=\"close\">&times;</span>-->\
+  <p id=\"gentle-alerts-modal-content-text\"></p>\
+</div>";
 var modal = undefined;
 
 function Modal(){
@@ -28,13 +28,13 @@ Modal.prototype.createModal = function createModal(msg) {
     modalContent.textContent = msg;
     this.modalElement = document.getElementById("gentle-alerts-modal");
     this.modalElement.style.display = "block";
-}
+};
 
 // Find and delete the modal
 Modal.prototype.deleteModal = function deleteModal() {
     this.modalElement.parentNode.removeChild(this.modalElement);
     this.modalElement = undefined;
-}
+};
 
 // Create, set the modal content, and show it
 Modal.prototype.generateModal = function generateModal() {
@@ -47,7 +47,7 @@ Modal.prototype.generateModal = function generateModal() {
     }
     this.createModal(msg);
     this.registerModalClose();
-}
+};
 
 // Set up an event to process closing the modal
 Modal.prototype.registerModalClose = function registerModalClose() {
@@ -63,14 +63,14 @@ Modal.prototype.registerModalClose = function registerModalClose() {
                 self.generateModal();
             }
             originalCallback(eventObject);
-        }
+        };
     }
     function noOp() {
         // Placeholder for when there is no built-in handler
     }
     // When the user clicks anywhere outside of the modal, close it
-    window.onclick = generateEvent(isOnclick, 'onclick', window.onclick || noOp);
-}
+    window.onclick = generateEvent(isOnclick, "onclick", window.onclick || noOp);
+};
 
 function gentleAlert(msg) {
     if (modal === undefined) {
@@ -79,6 +79,6 @@ function gentleAlert(msg) {
     modal.queueMsg(msg);
 }
 
-if (typeof window !== 'undefined' && window.alert != 'undefined') {
+if (typeof window !== "undefined" && window.alert != "undefined") {
     window.alert = gentleAlert;
 }
