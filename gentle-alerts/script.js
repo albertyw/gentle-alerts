@@ -26,7 +26,7 @@ Modal.prototype.createModal = function createModal(msg) {
     document.documentElement.appendChild(span);
     var modalContent = document.getElementById("gentle-alerts-modal-content-text");
     modalContent.textContent = msg;
-    this.getModal();
+    this.modalElement = document.getElementById("gentle-alerts-modal");
     this.modalElement.style.display = "block";
 }
 
@@ -34,11 +34,6 @@ Modal.prototype.createModal = function createModal(msg) {
 Modal.prototype.deleteModal = function deleteModal() {
     this.modalElement.parentNode.removeChild(this.modalElement);
     this.modalElement = undefined;
-}
-
-// Get the modal DOM element
-Modal.prototype.getModal = function getModal() {
-    this.modalElement = document.getElementById("gentle-alerts-modal");
 }
 
 // Create, set the modal content, and show it
