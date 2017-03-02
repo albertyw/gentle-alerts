@@ -4,6 +4,8 @@ var modalHTML = "\
   <p id=\"gentle-alerts-modal-content-text\"></p>\
 </div>";
 var modal = undefined;
+var flashInterval = 1250;
+var flashWaitMultiple = 6;
 
 function Modal(){
     this.msgQueue = [];
@@ -26,12 +28,14 @@ Modal.prototype.createModal = function createModal(msg) {
     modalContent.textContent = msg;
     this.modalElement = document.getElementById("gentle-alerts-modal");
     this.modalElement.style.display = "block";
+    this.flashTab();
 };
 
 // Find and delete the modal
 Modal.prototype.deleteModal = function deleteModal() {
     this.modalElement.parentNode.removeChild(this.modalElement);
     this.modalElement = undefined;
+    this.stopFlashTab();
 };
 
 // Create, set the modal content, and show it
@@ -68,6 +72,22 @@ Modal.prototype.registerModalClose = function registerModalClose() {
     }
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = generateEvent(isOnclick, "onclick", window.onclick || noOp);
+};
+
+// Start flashing tab at intervals
+Modal.prototype.flashTab = function flashTab() {
+    this.flasher = setInterval(function flashOn() {
+        var originalTitle = document.title;
+        document.title = originalTitle + " - Alert";
+        setTimeout(function flashOff() {
+            document.title = originalTitle;
+        }, flashInterval);
+    }, flashInterval * flashWaitMultiple);
+};
+
+// Stop flashing tab
+Modal.prototype.stopFlashTab = function stopFlashTab() {
+    clearInterval(this.flasher);
 };
 
 function gentleAlert(msg) {
