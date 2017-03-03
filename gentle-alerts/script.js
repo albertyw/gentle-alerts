@@ -13,9 +13,7 @@ function Modal(){
 // Add messages to the Modal queue
 Modal.prototype.queueMsg = function queueMsg(msg) {
     this.msgQueue.push(msg);
-    if (this.modalElement == undefined) {
-        this.generateModal();
-    }
+    this.generateModal();
 };
 
 // Create a modal from modalHTML and append to the bottom of the document
@@ -60,8 +58,8 @@ Modal.prototype.registerModalClose = function registerModalClose() {
             if (onClickCorrect(eventObject)) {
                 self.deleteModal();
                 window[windowEvent] = originalCallback;
-                self.generateModal();
             }
+            self.generateModal();
             originalCallback(eventObject);
         };
     }
