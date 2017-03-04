@@ -64,7 +64,6 @@ Modal.prototype.registerModalClose = function registerModalClose() {
                 window[windowEvent] = originalCallback;
             }
             self.generateModal();
-            originalCallback(eventObject);
         };
     }
     function noOp() {
