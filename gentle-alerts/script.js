@@ -6,6 +6,10 @@ var modalHTML = "\
 var modal = undefined;
 var flashInterval = 1250;
 var flashWaitMultiple = 6;
+var enterCode = 13;
+var escapeCode = 27;
+var spaceCode = 32;
+var closeModalKeyCodes = [enterCode, escapeCode, spaceCode];
 
 function Modal(){
     this.msgQueue = [];
@@ -57,6 +61,9 @@ Modal.prototype.registerModalClose = function registerModalClose() {
     function isOnclick(onClickEvent) {
         return onClickEvent.target == self.modalElement;
     }
+    function isOnKeyUp(onKeyUpEvent) {
+        return closeModalKeyCodes.includes(onKeyUpEvent.keyCode);
+    }
     function generateEvent(onClickCorrect, windowEvent, originalCallback) {
         return function eventCallback(eventObject) {
             if (onClickCorrect(eventObject)) {
@@ -71,6 +78,7 @@ Modal.prototype.registerModalClose = function registerModalClose() {
     }
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = generateEvent(isOnclick, "onclick", window.onclick || noOp);
+    window.onkeyup = generateEvent(isOnKeyUp, "onkeyup", window.onkeyup || noOp);
 };
 
 // Start flashing tab at intervals
