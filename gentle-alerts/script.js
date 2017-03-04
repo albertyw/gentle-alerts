@@ -65,20 +65,21 @@ Modal.prototype.registerModalClose = function registerModalClose() {
         return closeModalKeyCodes.includes(onKeyUpEvent.keyCode);
     }
     function generateEvent(onClickCorrect, windowEvent, originalCallback) {
-        return function eventCallback(eventObject) {
+        var callback = function eventCallback(eventObject) {
             if (onClickCorrect(eventObject)) {
                 self.deleteModal();
                 window[windowEvent] = originalCallback;
             }
             self.generateModal();
         };
+        window[windowEvent] = callback;
     }
     function noOp() {
         // Placeholder for when there is no built-in handler
     }
     // When the user clicks anywhere outside of the modal, close it
-    window.onclick = generateEvent(isOnclick, "onclick", window.onclick || noOp);
-    window.onkeyup = generateEvent(isOnKeyUp, "onkeyup", window.onkeyup || noOp);
+    generateEvent(isOnclick, "onclick", window.onclick || noOp);
+    generateEvent(isOnKeyUp, "onkeyup", window.onkeyup || noOp);
 };
 
 // Start flashing tab at intervals
