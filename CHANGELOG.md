@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+v0.4.0
+------
+
+ - Flash (pinned) tabs when an alert appears
+ - Support multiline alert messages
+ - 100% test coverage
+
+
 v0.3.1
 ------
 
