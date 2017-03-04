@@ -62,7 +62,7 @@ Modal.prototype.registerModalClose = function registerModalClose() {
         return onClickEvent.target == self.modalElement;
     }
     function isOnKeyUp(onKeyUpEvent) {
-        return closeModalKeyCodes.includes(onKeyUpEvent.keyCode);
+        return closeModalKeyCodes.indexOf(onKeyUpEvent.keyCode) >= 0;
     }
     function generateEvent(onClickCorrect, windowEvent) {
         var originalCallback = window[windowEvent];

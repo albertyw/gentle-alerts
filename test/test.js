@@ -28,7 +28,7 @@ describe("alert", function() {
         expect($("#gentle-alerts-modal-content-text").length).to.equal(1);
         expect($("#gentle-alerts-modal-content-text").text()).to.equal("alert text");
     });
-    it("can hide the modal", function(done) {
+    it("can hide the modal with a click", function(done) {
         alert("alert text");
         $.when($("#gentle-alerts-modal").trigger("click")).done(function(){
             expect($("#gentle-alerts-modal-content-text").length).to.equal(0);
@@ -55,6 +55,15 @@ describe("alert", function() {
         $.when($("#gentle-alerts-modal-content").trigger("click")).done(function(){
             expect($("#gentle-alerts-modal-content-text").length).to.equal(1);
             expect($("#gentle-alerts-modal-content-text").text()).to.equal("alert text");
+            done();
+        });
+    });
+    it("can hide the modal with a keypress", function(done) {
+        alert("alert text");
+        var e = jQuery.Event("keyup", {keyCode: 32});
+        $.when($("#gentle-alerts-modal").trigger(e)).done(function(){
+            expect($("#gentle-alerts-modal-content-text").length).to.equal(0);
+            expect($("#gentle-alerts-modal").length).to.equal(0);
             done();
         });
     });
