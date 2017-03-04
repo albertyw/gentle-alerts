@@ -58,4 +58,17 @@ describe("alert", function() {
             done();
         });
     });
+    it("will flash the title", function(done) {
+        flashInterval = 20;
+        var originalTitle = document.title;
+        alert("alert text");
+        expect(document.title).to.equal(originalTitle);
+        setTimeout(function() {
+            expect(document.title).to.not.equal(originalTitle);
+            setTimeout(function() {
+                expect(document.title).to.equal(originalTitle);
+                done();
+            }, flashInterval);
+        }, flashInterval * 6.5);
+    });
 });
