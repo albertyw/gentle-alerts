@@ -4,6 +4,7 @@ Gentle Alerts
 Google chrome extension to convert alerts into gentle notifications
 
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/bcjaadnpjolbaginfighnpcdjmbeiahn.svg)](https://chrome.google.com/webstore/detail/gentle-alerts/bcjaadnpjolbaginfighnpcdjmbeiahn)
+[![npm](https://img.shields.io/npm/v/gentle-alerts.svg)](https://www.npmjs.com/package/gentle-alerts)
 
 [ ![Codeship Status for albertyw/gentle-alerts](https://app.codeship.com/projects/3a271aa0-d8b1-0134-15a2-326e4d300ce2/status?branch=master)](https://app.codeship.com/projects/203223)
 [![Test Coverage](https://codeclimate.com/github/albertyw/gentle-alerts/badges/coverage.svg)](https://codeclimate.com/github/albertyw/gentle-alerts/coverage)
