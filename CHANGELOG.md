@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+v0.5.0
+------
+
+ - Allow closing modal by pressing space, enter, escape
+
+
 v0.4.0
 ------
 
