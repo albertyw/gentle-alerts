@@ -39,12 +39,14 @@ Testing
 npm test
 ```
 
-Packaging
----------
+Releasing a new version
+-----------------------
 
-```
-npm package
-```
-
-Upload the zip file to the
-[chrome web store](https://chrome.google.com/webstore/developer/dashboard).
+1. Update Changelog
+2. Update gentle-alerts/manifest.json with new version
+3. Update package.json with new version
+4. Commit a new release
+5. Tag and push the commit
+6. `npm publish`
+7. `npm package`
+8. Upload the zip file to the [chrome web store](https://chrome.google.com/webstore/developer/dashboard)
