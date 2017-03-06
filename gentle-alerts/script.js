@@ -37,6 +37,9 @@ Modal.prototype.createModal = function createModal(msg) {
 
 // Find and delete the modal
 Modal.prototype.deleteModal = function deleteModal() {
+    if (this.modalElement === undefined) {
+        return;
+    }
     this.modalElement.parentNode.removeChild(this.modalElement);
     this.modalElement = undefined;
     this.stopFlashTab();
@@ -58,6 +61,7 @@ Modal.prototype.generateModal = function generateModal() {
 // Set up an event to process closing the modal
 Modal.prototype.registerModalClose = function registerModalClose() {
     var self = this;
+    var originalCallbacks = {};
     function isOnclick(onClickEvent) {
         return onClickEvent.target == self.modalElement;
     }
@@ -65,12 +69,16 @@ Modal.prototype.registerModalClose = function registerModalClose() {
         return closeModalKeyCodes.indexOf(onKeyUpEvent.keyCode) >= 0;
     }
     function generateEvent(onClickCorrect, windowEvent) {
-        var originalCallback = window[windowEvent];
+        originalCallbacks[windowEvent] = window[windowEvent];
         var callback = function eventCallback(eventObject) {
-            if (onClickCorrect(eventObject)) {
-                self.deleteModal();
-                window[windowEvent] = originalCallback;
+            if (!onClickCorrect(eventObject)) {
+                return;
             }
+            self.deleteModal();
+            Object.keys(originalCallbacks).forEach(function (key) {
+                var originalCallback = originalCallbacks[key];
+                window[key] = originalCallback;
+            });
             self.generateModal();
         };
         window[windowEvent] = callback;
