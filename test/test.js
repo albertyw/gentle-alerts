@@ -21,6 +21,28 @@ describe("Modal", function() {
     });
 });
 
+describe("Modal.prototype.deleteModal", function() {
+    beforeEach(resetModals);
+    it("will not double delete", function() {
+        var modal = new Modal();
+        expect(modal.modalElement).to.be.undefined;
+        modal.deleteModal();
+        expect(modal.modalElement).to.be.undefined;
+    });
+});
+
+describe("Modal.prototype.generateModal", function() {
+    beforeEach(resetModals);
+    it("will not double generate", function() {
+        var modal = new Modal();
+        modal.queueMsg("test 1");
+        modal.queueMsg("test 2");
+        expect(modal.msgQueue).to.have.lengthOf(1);
+        modal.generateModal();
+        expect(modal.msgQueue).to.have.lengthOf(1);
+    });
+});
+
 describe("alert", function() {
     beforeEach(resetModals);
     it("can show modal", function() {
