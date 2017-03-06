@@ -71,13 +71,14 @@ Modal.prototype.registerModalClose = function registerModalClose() {
     function generateEvent(onClickCorrect, windowEvent) {
         originalCallbacks[windowEvent] = window[windowEvent];
         var callback = function eventCallback(eventObject) {
-            if (onClickCorrect(eventObject)) {
-                self.deleteModal();
-                Object.keys(originalCallbacks).forEach(function (key) {
-                    var originalCallback = originalCallbacks[key];
-                    window[key] = originalCallback;
-                });
+            if (!onClickCorrect(eventObject)) {
+                return;
             }
+            self.deleteModal();
+            Object.keys(originalCallbacks).forEach(function (key) {
+                var originalCallback = originalCallbacks[key];
+                window[key] = originalCallback;
+            });
             self.generateModal();
         };
         window[windowEvent] = callback;
