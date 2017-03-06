@@ -19,5 +19,5 @@
   "homepage_url": "https://github.com/albertyw/gentle-alerts",
   "offline_enabled": true,
   "permissions": ["tabs"],
-  "web_accessible_resources": ["script.js", "gentle-alerts.css"]
+  "web_accessible_resources": ["script.js", "gentle-alerts.css", "notification.ogg"]
 }
