@@ -1,6 +1,15 @@
 Change Log
 ==========
 
+v0.6.0
+------
+
+ - Add audio notification sound
+ - Bugfix - Fix a race condition where a modal could be closed multiple times
+ - Bugfix - Fix resetting closeModal callbacks
+ - Minor cleanup/updates
+
+
 v0.5.0
 ------
 
