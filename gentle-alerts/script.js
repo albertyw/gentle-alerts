@@ -10,6 +10,7 @@ var enterCode = 13;
 var escapeCode = 27;
 var spaceCode = 32;
 var closeModalKeyCodes = [enterCode, escapeCode, spaceCode];
+var notificationAudio = document.currentScript.dataset.notificationAudio;
 
 function Modal(){
     this.msgQueue = [];
@@ -90,6 +91,10 @@ Modal.prototype.registerModalClose = function registerModalClose() {
 
 // Start flashing tab at intervals
 Modal.prototype.flashTab = function flashTab() {
+    if (notificationAudio) {
+        var audio = new Audio(notificationAudio);
+        audio.play();
+    }
     this.flasher = setInterval(function flashOn() {
         var originalTitle = document.title;
         document.title = originalTitle + " - Alert";

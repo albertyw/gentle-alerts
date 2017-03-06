@@ -22,7 +22,8 @@ The extension will replace the built-in browser alert window with a modal which
 won't force you to context switch between tabs.  It also prevents you from
 accidentally closing alert windows when you're typing.
 
-You can close the modal by pressing "Enter", "Escape", or "Space".
+You can close the modal by pressing "Enter", "Escape", or "Space".  When
+opening, it has an [audio chime](https://notificationsounds.com/message-tones/just-like-that-404).
 
 **Contributions welcome**
 
