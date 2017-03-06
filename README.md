@@ -49,5 +49,5 @@ Releasing a new version
 4. Commit a new release
 5. Tag and push the commit
 6. `npm publish`
-7. `npm package`
+7. `npm run package`
 8. Upload the zip file to the [chrome web store](https://chrome.google.com/webstore/developer/dashboard)
