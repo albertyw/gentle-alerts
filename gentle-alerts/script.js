@@ -81,6 +81,8 @@ Modal.prototype.registerModalClose = function registerModalClose() {
                 window[key] = originalCallback;
             });
             self.generateModal();
+            eventObject.preventDefault();
+            return false;
         };
         window[windowEvent] = callback;
     }
