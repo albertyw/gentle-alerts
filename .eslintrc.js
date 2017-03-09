@@ -20,5 +20,18 @@ module.exports = {
             "error",
             "always"
         ]
+    },
+    "globals": {
+        "$": true,
+        "it": true,
+        "describe": true,
+        "beforeEach": true,
+        "chai": true,
+        "jQuery": true,
+        "chrome": true,
+        "modal": true,
+        "modalHTML": true,
+        "Modal": true,
+        "flashInterval": true
     }
 };
