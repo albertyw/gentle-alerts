@@ -45,6 +45,13 @@ describe("Modal.prototype.generateModal", function() {
 
 describe("alert", function() {
     beforeEach(resetModals);
+    function closeAndAssertClosed(triggerEvent, done) {
+        $.when($("#gentle-alerts-modal").trigger(triggerEvent)).done(function(){
+            expect($("#gentle-alerts-modal-content-text").length).to.equal(0);
+            expect($("#gentle-alerts-modal").length).to.equal(0);
+            done();
+        });
+    }
     it("can show modal", function() {
         alert("alert text");
         expect($("#gentle-alerts-modal-content-text").length).to.equal(1);
@@ -52,11 +59,7 @@ describe("alert", function() {
     });
     it("can hide the modal with a click", function(done) {
         alert("alert text");
-        $.when($("#gentle-alerts-modal").trigger("click")).done(function(){
-            expect($("#gentle-alerts-modal-content-text").length).to.equal(0);
-            expect($("#gentle-alerts-modal").length).to.equal(0);
-            done();
-        });
+        closeAndAssertClosed("click", done);
     });
     it("can queue and show two modals", function(done) {
         alert("alert test 1");
@@ -66,10 +69,7 @@ describe("alert", function() {
         $.when($("#gentle-alerts-modal").trigger("click")).done(function(){
             expect($("#gentle-alerts-modal").length).to.equal(1);
             expect($("#gentle-alerts-modal-content-text").text()).to.equal("alert test 2");
-            $.when($("#gentle-alerts-modal").trigger("click")).done(function(){
-                expect($("#gentle-alerts-modal").length).to.equal(0);
-                done();
-            });
+            closeAndAssertClosed("click", done);
         });
     });
     it("will not hide the modal when the modal itself is clicked", function(done) {
@@ -83,11 +83,7 @@ describe("alert", function() {
     it("can hide the modal with a keypress", function(done) {
         alert("alert text");
         var e = jQuery.Event("keyup", {keyCode: 32});
-        $.when($("#gentle-alerts-modal").trigger(e)).done(function(){
-            expect($("#gentle-alerts-modal-content-text").length).to.equal(0);
-            expect($("#gentle-alerts-modal").length).to.equal(0);
-            done();
-        });
+        closeAndAssertClosed(e, done);
     });
     it("will flash the title", function(done) {
         flashInterval = 20;
