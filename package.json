@@ -4,7 +4,7 @@
   "description": "Convert alerts into gentle notifications",
   "scripts": {
     "test": "npm run eslint && npm run test-bdd",
-    "eslint": "eslint gentle-alerts/script.js",
+    "eslint": "eslint gentle-alerts test",
     "test-bdd": "npm run istanbul-instrument && npm run mocha && istanbul report text lcov",
     "istanbul-instrument": "istanbul instrument -i ./gentle-alerts -o ./instrumented",
     "mocha": "mocha-phantomjs -k mocha-phantomjs-istanbul ./test/index.htm",
