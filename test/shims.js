@@ -11,7 +11,7 @@ document.currentScript = {
 
 // Set `HTMLAudioElement`
 // https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement
-var Audio = function Audio(audio) {
+var Audio = function Audio() {
 };
 Audio.prototype.play = function play() {
 };
