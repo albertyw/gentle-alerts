@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+v0.6.1
+------
+
+ - Bugfix - Do not scroll when using spacebar to close modal
+ - Update logo and screenshots
+ - Minor refactors
+
+
 v0.6.0
 ------
 
