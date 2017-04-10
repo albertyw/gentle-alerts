@@ -93,11 +93,11 @@ Modal.prototype.registerModalClose = function registerModalClose() {
 
 // Start flashing tab at intervals
 Modal.prototype.flashTab = function flashTab() {
-    if (notificationAudio) {
-        var audio = new Audio(notificationAudio);
-        audio.play();
-    }
     this.flasher = setInterval(function flashOn() {
+        if (notificationAudio) {
+            var audio = new Audio(notificationAudio);
+            audio.play();
+        }
         var originalTitle = document.title;
         document.title = originalTitle + " - Alert";
         setTimeout(function flashOff() {
