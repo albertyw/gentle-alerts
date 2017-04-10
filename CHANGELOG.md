@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+v0.6.2
+------
+
+ - Vertically center alert modal
+ - Fix image transparency
+ - Increase audio alert frequency/volume
+
+
 v0.6.1
 ------
 
