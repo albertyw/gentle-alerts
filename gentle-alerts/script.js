@@ -1,6 +1,5 @@
 var modalHTML = "\
 <div id=\"gentle-alerts-modal-content\">\
-  <!--<span class=\"close\">&times;</span>-->\
   <p id=\"gentle-alerts-modal-content-text\"></p>\
 </div>";
 var modal = undefined;
