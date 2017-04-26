@@ -8,7 +8,8 @@
     "test-bdd": "npm run istanbul-instrument && npm run mocha && istanbul report text lcov",
     "istanbul-instrument": "istanbul instrument -i ./gentle-alerts -o ./instrumented",
     "mocha": "mocha-phantomjs -k mocha-phantomjs-istanbul ./test/index.htm",
-    "package": "git ls-files | grep gentle-alerts | xargs zip gentle-alerts.zip"
+    "package": "git ls-files | grep gentle-alerts | xargs zip gentle-alerts.zip",
+    "clean": "rm -f gentle-alerts/script.min.js && find | grep DS | xargs rm"
   },
   "repository": {
     "type": "git",
