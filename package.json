@@ -3,13 +3,14 @@
   "version": "0.6.2",
   "description": "Convert alerts into gentle notifications",
   "scripts": {
-    "test": "npm run eslint && npm run test-bdd",
+    "test": "npm run uglify && npm run eslint && npm run test-bdd",
     "eslint": "eslint gentle-alerts test",
     "test-bdd": "npm run istanbul-instrument && npm run mocha && istanbul report text lcov",
     "istanbul-instrument": "istanbul instrument -i ./gentle-alerts -o ./instrumented",
     "mocha": "mocha-phantomjs -k mocha-phantomjs-istanbul ./test/index.htm",
+    "uglify": "uglifyjs --compress --mangle --wrap -o gentle-alerts/script.min.js -- gentle-alerts/script.js",
     "package": "git ls-files | grep gentle-alerts | xargs zip gentle-alerts.zip",
-    "clean": "rm -f gentle-alerts/script.min.js && find | grep DS | xargs rm"
+    "clean": "rm -f gentle-alerts/script.min.js && rm -f gentle-alerts.zip && find | grep DS | xargs rm -f"
   },
   "repository": {
     "type": "git",
