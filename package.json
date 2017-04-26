@@ -9,7 +9,7 @@
     "istanbul-instrument": "istanbul instrument -i ./gentle-alerts -o ./instrumented",
     "mocha": "mocha-phantomjs -k mocha-phantomjs-istanbul ./test/index.htm",
     "uglify": "uglifyjs --compress --mangle --wrap -o gentle-alerts/script.min.js -- gentle-alerts/script.js",
-    "package": "git ls-files | grep gentle-alerts | xargs zip gentle-alerts.zip",
+    "package": "npm run clean && npm run uglify && zip -r gentle-alerts.zip gentle-alerts",
     "clean": "rm -f gentle-alerts/script.min.js && rm -f gentle-alerts.zip && find | grep DS | xargs rm -f"
   },
   "repository": {
