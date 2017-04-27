@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+v0.6.3
+------
+
+ - Minify scripts
+ - Various cleanup
+
+
 v0.6.2
 ------
 

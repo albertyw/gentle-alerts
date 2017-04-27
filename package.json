@@ -1,6 +1,6 @@
 {
   "name": "gentle-alerts",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Convert alerts into gentle notifications",
   "scripts": {
     "test": "npm run uglify && npm run eslint && npm run test-bdd",
