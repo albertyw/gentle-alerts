@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+v1.0.0
+------
+
+ - Add promo images
+
+
 v0.6.3
 ------
 
