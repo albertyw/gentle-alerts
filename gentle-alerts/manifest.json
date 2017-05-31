@@ -19,6 +19,13 @@
   }],
   "homepage_url": "https://github.com/albertyw/gentle-alerts",
   "offline_enabled": true,
-  "permissions": ["tabs"],
-  "web_accessible_resources": ["script.min.js", "gentle-alerts.css", "notification.ogg"]
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "web_accessible_resources": ["script.min.js", "gentle-alerts.css", "notification.ogg", "options.js"],
+  "options_ui": {
+    "page": "options.htm",
+    "chrome_style": true
+  }
 }
