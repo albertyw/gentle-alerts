@@ -16,5 +16,5 @@ chrome.storage.sync.get({
 }, function(items) {
     Object.keys(items).forEach(function (key) {
         s.dataset[key] = items[key];
-    })
+    });
 });
