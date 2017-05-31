@@ -32,7 +32,7 @@ Modal.prototype.createModal = function createModal(msg) {
     modalContent.textContent = msg;
     this.modalElement = document.getElementById("gentle-alerts-modal");
     this.modalElement.style.display = "block";
-    this.flashTab();
+    this.notify();
 };
 
 // Find and delete the modal
@@ -91,8 +91,8 @@ Modal.prototype.registerModalClose = function registerModalClose() {
 };
 
 // Start flashing tab at intervals
-Modal.prototype.flashTab = function flashTab() {
-    this.flasher = setInterval(function flashOn() {
+Modal.prototype.notify = function notify() {
+    this.notification = setInterval(function flashOn() {
         if (notificationAudio) {
             var audio = new Audio(notificationAudio);
             audio.play();
@@ -107,7 +107,7 @@ Modal.prototype.flashTab = function flashTab() {
 
 // Stop flashing tab
 Modal.prototype.stopFlashTab = function stopFlashTab() {
-    clearInterval(this.flasher);
+    clearInterval(this.notification);
 };
 
 function gentleAlert(msg) {
