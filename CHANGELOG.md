@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+v1.1.0
+------
+
+ - Add options window to extensions
+ - Add option to update Audio Notification
+ - Update uglify and chai packages
+
+
 v1.0.0
 ------
 
