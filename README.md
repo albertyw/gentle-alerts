@@ -56,4 +56,5 @@ Design
 ------
 
 The logo is from [logodust](http://www.logodust.com/).  The background color is `rgb(132, 192, 215)`:
+
 ![84c0d7](https://placehold.it/150/84c0d7?text=84c0d7)
