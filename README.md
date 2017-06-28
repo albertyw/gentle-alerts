@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="gentle-alerts/img/logo128x128.png">
+</p>
+
 Gentle Alerts
 =============
 
@@ -10,8 +14,6 @@ Google chrome extension to convert alerts into gentle notifications
 [![Test Coverage](https://codeclimate.com/github/albertyw/gentle-alerts/badges/coverage.svg)](https://codeclimate.com/github/albertyw/gentle-alerts/coverage)
 [![Code Climate](https://codeclimate.com/github/albertyw/gentle-alerts/badges/gpa.svg)](https://codeclimate.com/github/albertyw/gentle-alerts)
 [![Dependency Status](https://gemnasium.com/badges/github.com/albertyw/gentle-alerts.svg)](https://gemnasium.com/github.com/albertyw/gentle-alerts)
-
-![Gentle Alerts Icon](gentle-alerts/img/logo128x128.png)
 
 I started this project after getting annoyed with Google Calendar's event
 notifications.  They used to have nice soft notifications, but they broke it
