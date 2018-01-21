@@ -30,6 +30,7 @@ module.exports = {
         "jQuery": true,
         "chrome": true,
         "modal": true,
+        "modalTimeout": true,
         "modalHTML": true,
         "Modal": true,
         "flashInterval": true
