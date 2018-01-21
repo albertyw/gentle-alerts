@@ -6,10 +6,10 @@ var modal = undefined;
 var audioNotification = "once";
 var flashInterval = 1250;
 var flashWaitMultiple = 6;
-var enterCode = 13;
-var escapeCode = 27;
-var spaceCode = 32;
-var closeModalKeyCodes = [enterCode, escapeCode, spaceCode];
+var enterCode = "Enter";
+var escapeCode = "Escape";
+var spaceCode = "Space";
+var closeModalCodes = [enterCode, escapeCode, spaceCode];
 var currentScript = document.currentScript;
 var notificationAudio = currentScript.dataset.notificationAudio;
 
@@ -68,7 +68,7 @@ Modal.prototype.registerModalClose = function registerModalClose() {
         return onClickEvent.target == self.modalElement;
     }
     function isOnKeyUp(onKeyUpEvent) {
-        return closeModalKeyCodes.indexOf(onKeyUpEvent.keyCode) >= 0;
+        return closeModalCodes.indexOf(onKeyUpEvent.code) >= 0;
     }
     function generateEvent(onClickCorrect, windowEvent) {
         originalCallbacks[windowEvent] = window[windowEvent];

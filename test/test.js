@@ -82,7 +82,7 @@ describe("alert", function() {
     });
     it("can hide the modal with a keypress", function(done) {
         alert("alert text");
-        var e = jQuery.Event("keyup", {keyCode: 32});
+        var e = jQuery.Event("keyup", {code: "Space"});
         closeAndAssertClosed(e, done);
     });
     it("will flash the title", function(done) {
