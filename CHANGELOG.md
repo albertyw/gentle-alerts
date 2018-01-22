@@ -1,6 +1,15 @@
 Change Log
 ==========
 
+v1.1.1
+------
+
+ - Updates to documentation
+ - Updates to dependencies
+ - Switch out deprecated keyboard event usage
+ - Added code of conduct for open source contributions
+
+
 v1.1.0
 ------
 
