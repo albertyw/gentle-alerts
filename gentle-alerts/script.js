@@ -11,8 +11,8 @@ var currentScript = document.currentScript;
 // Frequency at which the audio notification sounds
 // Values can be "none", "once", or "repeating"
 var audioNotificationFrequency = "once";
-// HTML5 Audio value to be played during audio notification
-var notificationAudio = currentScript.dataset.notificationAudio;
+// Location of audio file to be played during audio notification
+var audioNotificationFile = currentScript.dataset.audioNotificationFile;
 
 // Interval to wait within a double flash
 var flashInterval = 1250;
@@ -120,8 +120,8 @@ Modal.prototype.notify = function notify() {
     this.notification = setInterval(function flashOn() {
         var playAudio = (audioNotificationFrequency == "once" && !notified)
             || audioNotificationFrequency == "repeating";
-        if (notificationAudio && playAudio) {
-            var audio = new Audio(notificationAudio);
+        if (audioNotificationFile && playAudio) {
+            var audio = new Audio(audioNotificationFile);
             audio.play();
         }
         notified = true;

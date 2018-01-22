@@ -1,7 +1,7 @@
 // Install Javascript
 var s = document.createElement("script");
 s.src = chrome.runtime.getURL("script.min.js");
-s.dataset.notificationAudio = chrome.runtime.getURL("notification.ogg");
+s.dataset.audioNotificationFile = chrome.runtime.getURL("notification.ogg");
 (document.head||document.documentElement).appendChild(s);
 
 // Install CSS
