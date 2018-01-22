@@ -3,7 +3,7 @@ var modalHTML = "\
   <p id=\"gentle-alerts-modal-content-text\"></p>\
 </div>";
 var modal = undefined;
-var audioNotification = "once";
+var audioNotificationFrequency = "once";
 var flashInterval = 1250;
 var flashWaitMultiple = 6;
 var modalTimeout = 30 * 60 * 1000;
@@ -104,7 +104,8 @@ Modal.prototype.registerModalClose = function registerModalClose() {
 Modal.prototype.notify = function notify() {
     var notified = false;
     this.notification = setInterval(function flashOn() {
-        var playAudio = (audioNotification == "once" && !notified) || audioNotification == "repeating";
+        var playAudio = (audioNotificationFrequency == "once" && !notified)
+            || audioNotificationFrequency == "repeating";
         if (notificationAudio && playAudio) {
             var audio = new Audio(notificationAudio);
             audio.play();
@@ -124,7 +125,7 @@ Modal.prototype.stopFlashTab = function stopFlashTab() {
 };
 
 function gentleAlert(msg) {
-    audioNotification = currentScript.dataset.audioNotification;
+    audioNotificationFrequency = currentScript.dataset.audioNotificationFrequency;
     if (modal === undefined) {
         modal = new Modal();
     }
