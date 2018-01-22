@@ -1,18 +1,32 @@
+// HTML to show the modal
 var modalHTML = "\
 <div id=\"gentle-alerts-modal-content\">\
   <p id=\"gentle-alerts-modal-content-text\"></p>\
 </div>";
+// Global Modal value so that modal messages can be queued
 var modal = undefined;
+// Location to read user configs
+var currentScript = document.currentScript;
+
+// Frequency at which the audio notification sounds
+// Values can be "none", "once", or "repeating"
 var audioNotificationFrequency = "once";
+// HTML5 Audio value to be played during audio notification
+var notificationAudio = currentScript.dataset.notificationAudio;
+
+// Interval to wait within a double flash
 var flashInterval = 1250;
+// Interval to wait between double flashes
 var flashWaitMultiple = 6;
+
+// Time to wait until notification disappears
 var modalTimeout = 30 * 60 * 1000;
+
+// Keys to close modals
 var enterCode = "Enter";
 var escapeCode = "Escape";
 var spaceCode = "Space";
 var closeModalCodes = [enterCode, escapeCode, spaceCode];
-var currentScript = document.currentScript;
-var notificationAudio = currentScript.dataset.notificationAudio;
 
 function Modal(){
     this.msgQueue = [];
