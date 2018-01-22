@@ -32,5 +32,8 @@
     "mocha-phantomjs": "^4.1.0",
     "mocha-phantomjs-istanbul": "0.0.2",
     "uglify-js": "^3.0.9"
+  },
+  "engines": {
+    "node": ">=8"
   }
 }
