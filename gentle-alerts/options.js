@@ -4,7 +4,8 @@ var defaultModalTimeout = 30 * 60 * 1000;
 // Saves options to chrome.storage.sync.
 function save_options() {
     var audioNotificationFrequency = document.getElementById("audioNotificationFrequency").value;
-    var modalTimeout = document.getElementById("modalTimeout").value;
+    var modalTimeoutMinutes = document.getElementById("modalTimeoutMinutes").value;
+    var modalTimeout = modalTimeoutMinutes * 60 * 1000;
     chrome.storage.sync.set({
         audioNotificationFrequency: audioNotificationFrequency,
         modalTimeout: modalTimeout,
@@ -25,7 +26,8 @@ function restore_options() {
         modalTimeout: defaultModalTimeout
     }, function(items) {
         document.getElementById("audioNotificationFrequency").value = items.audioNotificationFrequency;
-        document.getElementById("modalTimeout").value = items.modalTimeout;
+        var modalTimeoutMinutes = Math.round(items.modalTimeout / 60 / 1000);
+        document.getElementById("modalTimeoutMinutes").value = modalTimeoutMinutes;
     });
 }
 document.addEventListener("DOMContentLoaded", restore_options);
