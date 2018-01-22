@@ -86,14 +86,14 @@ describe("alert", function() {
         closeAndAssertClosed(e, done);
     });
     it("can hide the modal after a timeout", function(done) {
-        var originalModalTimeout = modalTimeout;
-        modalTimeout = 20;
+        var originalModalTimeout = document.currentScript.dataset.modalTimeout;
+        document.currentScript.dataset.modalTimeout = 20;
         alert("alert text");
         setTimeout(function() {
             expect($("#gentle-alerts-modal").length).to.equal(0);
-            modalTimeout = originalModalTimeout;
+            document.currentScript.dataset.modalTimeout = originalModalTimeout;
             done();
-        }, modalTimeout + 10);
+        }, document.currentScript.dataset.modalTimeout + 10);
     });
     it("will flash the title", function(done) {
         var originalFlashInterval = flashInterval;

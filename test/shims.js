@@ -5,7 +5,8 @@
 // https://developer.mozilla.org/en-US/docs/Web/API/Document/currentScript
 document.currentScript = {
     dataset: {
-        audioNotificationFile: "../gentle-alerts/notification.ogg"
+        audioNotificationFile: "../gentle-alerts/notification.ogg",
+        modalTimeout: 30 * 60 * 1000
     }
 };
 

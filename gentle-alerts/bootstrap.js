@@ -12,7 +12,8 @@ c.href = chrome.runtime.getURL("gentle-alerts.css");
 
 // Read configs
 chrome.storage.sync.get({
-    audioNotificationFrequency: "once"
+    audioNotificationFrequency: "once",
+    modalTimeout: 30 * 60 * 1000
 }, function(items) {
     Object.keys(items).forEach(function (key) {
         s.dataset[key] = items[key];
