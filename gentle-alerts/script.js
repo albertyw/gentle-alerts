@@ -6,6 +6,7 @@ var modal = undefined;
 var audioNotification = "once";
 var flashInterval = 1250;
 var flashWaitMultiple = 6;
+var modalTimeout = 30 * 60 * 1000;
 var enterCode = "Enter";
 var escapeCode = "Escape";
 var spaceCode = "Space";
@@ -64,6 +65,7 @@ Modal.prototype.generateModal = function generateModal() {
 Modal.prototype.registerModalClose = function registerModalClose() {
     var self = this;
     var originalCallbacks = {};
+    var timeoutTimer = undefined;
     function isOnclick(onClickEvent) {
         return onClickEvent.target == self.modalElement;
     }
@@ -81,6 +83,7 @@ Modal.prototype.registerModalClose = function registerModalClose() {
                 var originalCallback = originalCallbacks[key];
                 window[key] = originalCallback;
             });
+            clearTimeout(timeoutTimer);
             self.generateModal();
             eventObject.preventDefault();
             return false;
@@ -90,6 +93,11 @@ Modal.prototype.registerModalClose = function registerModalClose() {
     // When the user clicks anywhere outside of the modal, close it
     generateEvent(isOnclick, "onclick");
     generateEvent(isOnKeyUp, "onkeyup");
+    // When the modal times out, close it
+    timeoutTimer = setTimeout(function callback(){
+        var keyUpEvent = new KeyboardEvent("keyup", {code: escapeCode});
+        window.onkeyup(keyUpEvent);
+    }, modalTimeout);
 };
 
 // Start flashing tab at intervals

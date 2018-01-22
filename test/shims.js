@@ -15,3 +15,13 @@ var Audio = function Audio() {
 };
 Audio.prototype.play = function play() {
 };
+
+// Set `KeyboardEvent`
+// https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent
+var KeyboardEvent = function KeyboardEvent(typeArg, keyboardEventInit) {
+    var self = this;
+    Object.keys(keyboardEventInit).forEach(function (key) {
+        self[key] = keyboardEventInit[key];
+    });
+};
+KeyboardEvent.prototype.preventDefault = function preventDefault() {};
