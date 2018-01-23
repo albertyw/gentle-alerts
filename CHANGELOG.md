@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+v1.2.0
+------
+
+ - Add alert timeout
+ - Code cleanup
+
+
 v1.1.1
 ------
 
