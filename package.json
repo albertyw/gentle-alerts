@@ -5,7 +5,7 @@
   "scripts": {
     "test": "npm run uglify && npm run eslint && npm run test-bdd",
     "eslint": "eslint gentle-alerts test",
-    "test-bdd": "npm run nyc-instrument && npm run mocha && nyc report --temp-directory coverage text lcov",
+    "test-bdd": "npm run nyc-instrument && npm run mocha && nyc report --temp-directory coverage -r text -r lcov",
     "nyc-instrument": "nyc instrument ./gentle-alerts ./instrumented",
     "mocha": "mocha-phantomjs -k mocha-phantomjs-istanbul ./test/index.htm",
     "uglify": "uglifyjs --compress --mangle --wrap GentleAlerts -o gentle-alerts/script.min.js -- gentle-alerts/script.js",
