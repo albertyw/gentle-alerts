@@ -52,10 +52,11 @@ describe("alert", function() {
             done();
         });
     }
-    it("can show modal", function() {
+    it("can show modal", function(done) {
         alert("alert text");
         expect($("#gentle-alerts-modal-content-text").length).to.equal(1);
         expect($("#gentle-alerts-modal-content-text").text()).to.equal("alert text");
+        closeAndAssertClosed("click", done);
     });
     it("can hide the modal with a click", function(done) {
         alert("alert text");
@@ -77,7 +78,7 @@ describe("alert", function() {
         $.when($("#gentle-alerts-modal-content").trigger("click")).done(function(){
             expect($("#gentle-alerts-modal-content-text").length).to.equal(1);
             expect($("#gentle-alerts-modal-content-text").text()).to.equal("alert text");
-            done();
+            closeAndAssertClosed("click", done);
         });
     });
     it("can hide the modal with a keypress", function(done) {
@@ -86,18 +87,17 @@ describe("alert", function() {
         closeAndAssertClosed(e, done);
     });
     it("can hide the modal after a timeout", function(done) {
-        var originalModalTimeout = document.currentScript.dataset.modalTimeout;
-        document.currentScript.dataset.modalTimeout = 20;
-        alert("alert text");
+        var originalModalTimeout = window.modalTimeout;
+        window.modalTimeout = 20;
         setTimeout(function() {
             expect($("#gentle-alerts-modal").length).to.equal(0);
-            document.currentScript.dataset.modalTimeout = originalModalTimeout;
-            done();
-        }, document.currentScript.dataset.modalTimeout + 10);
+            window.modalTimeout = originalModalTimeout;
+            closeAndAssertClosed("click", done);
+        }, parseInt(window.modalTimeout, 10) + 10);
     });
     it("will flash the title", function(done) {
         var originalFlashInterval = flashInterval;
-        flashInterval = 5;
+        window.flashInterval = 10;
         var originalTitle = document.title;
         alert("alert text");
         expect(document.title).to.equal(originalTitle);
@@ -106,7 +106,7 @@ describe("alert", function() {
             setTimeout(function() {
                 expect(document.title).to.equal(originalTitle);
                 flashInterval = originalFlashInterval;
-                done();
+                closeAndAssertClosed("click", done);
             }, flashInterval);
         }, flashInterval * 6.5);
     });

@@ -140,7 +140,7 @@ Modal.prototype.stopFlashTab = function stopFlashTab() {
 
 function gentleAlert(msg) {
     audioNotificationFrequency = currentScript.dataset.audioNotificationFrequency;
-    modalTimeout = currentScript.dataset.modalTimeout;
+    modalTimeout = currentScript.dataset.modalTimeout || modalTimeout;
     if (modal === undefined) {
         modal = new Modal();
     }

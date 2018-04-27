@@ -33,6 +33,7 @@ module.exports = {
         "modalTimeout": true,
         "modalHTML": true,
         "Modal": true,
-        "flashInterval": true
+        "flashInterval": true,
+        "currentScript": true
     }
 };
