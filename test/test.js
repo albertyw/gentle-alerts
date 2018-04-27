@@ -87,19 +87,17 @@ describe("alert", function() {
         closeAndAssertClosed(e, done);
     });
     it("can hide the modal after a timeout", function(done) {
-        var originalModalTimeout = currentScript.dataset.modalTimeout;
-        currentScript.dataset.modalTimeout = 20;
-        alert("alert text");
+        var originalModalTimeout = window.modalTimeout;
+        window.modalTimeout = 20;
         setTimeout(function() {
             expect($("#gentle-alerts-modal").length).to.equal(0);
-            currentScript.dataset.modalTimeout = originalModalTimeout;
             window.modalTimeout = originalModalTimeout;
             closeAndAssertClosed("click", done);
-        }, parseInt(currentScript.dataset.modalTimeout, 10) + 10);
+        }, parseInt(window.modalTimeout, 10) + 10);
     });
     it("will flash the title", function(done) {
         var originalFlashInterval = flashInterval;
-        flashInterval = 5;
+        window.flashInterval = 10;
         var originalTitle = document.title;
         alert("alert text");
         expect(document.title).to.equal(originalTitle);
