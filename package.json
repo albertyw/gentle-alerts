@@ -5,9 +5,9 @@
   "scripts": {
     "test": "npm run uglify && npm run eslint && npm run test-bdd",
     "eslint": "eslint gentle-alerts test",
-    "test-bdd": "npm run nyc-instrument && npm run mocha && nyc report --temp-directory coverage -r text -r lcov",
+    "test-bdd": "npm run nyc-instrument && npm run mocha && nyc report -r text -r lcov",
     "nyc-instrument": "nyc instrument ./gentle-alerts ./instrumented",
-    "mocha": "mocha-headless-chrome -f ./test/index.htm",
+    "mocha": "mocha-headless-chrome -f ./test/index.htm -c .nyc_output/coverage.json",
     "uglify": "uglifyjs --compress --mangle --wrap GentleAlerts -o gentle-alerts/script.min.js -- gentle-alerts/script.js",
     "package": "npm run clean && npm run uglify && zip -r gentle-alerts.zip gentle-alerts",
     "clean": "rm -f gentle-alerts/script.min.js && rm -f gentle-alerts.zip && find | grep DS | xargs rm -f"
