@@ -89,6 +89,7 @@ describe("alert", function() {
     it("can hide the modal after a timeout", function(done) {
         var originalModalTimeout = window.modalTimeout;
         window.modalTimeout = 20;
+        alert("alert text");
         setTimeout(function() {
             expect($("#gentle-alerts-modal").length).to.equal(0);
             window.modalTimeout = originalModalTimeout;
