@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+v1.2.1
+------
+
+ - Update dependencies
+ - Switch testing from phantomjs to headless-chrome
+ - Update tests
+
+
 v1.2.0
 ------
 
