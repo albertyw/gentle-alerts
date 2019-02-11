@@ -23,7 +23,7 @@
     "tabs",
     "storage"
   ],
-  "web_accessible_resources": ["script.min.js", "gentle-alerts.css", "notification.ogg", "options.js"],
+  "web_accessible_resources": ["gentle-alerts.min.js", "gentle-alerts.css", "notification.ogg", "options.js"],
   "options_ui": {
     "page": "options.htm",
     "chrome_style": true

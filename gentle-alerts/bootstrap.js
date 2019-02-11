@@ -1,6 +1,6 @@
 // Install Javascript
 var s = document.createElement("script");
-s.src = chrome.runtime.getURL("script.min.js");
+s.src = chrome.runtime.getURL("gentle-alerts.min.js");
 s.dataset.audioNotificationFile = chrome.runtime.getURL("notification.ogg");
 (document.head||document.documentElement).appendChild(s);
 
