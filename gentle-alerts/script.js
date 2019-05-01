@@ -150,3 +150,7 @@ function gentleAlert(msg) {
 if (typeof window !== "undefined" && window.alert != "undefined") {
     window.alert = gentleAlert;
 }
+
+module.exports = {
+    Modal: Modal
+};
