@@ -8,12 +8,6 @@ var modal = undefined;
 // Location to read user configs
 var currentScript = document.currentScript;
 
-// Frequency at which the audio notification sounds
-// Values can be "none", "once", or "repeating"
-var audioNotificationFrequency = "once";
-// Location of audio file to be played during audio notification
-var audioNotificationFile = currentScript.dataset.audioNotificationFile;
-
 // Interval to wait within a double flash
 var flashInterval = 1250;
 // Interval to wait between double flashes
@@ -27,6 +21,20 @@ var enterCode = "Enter";
 var escapeCode = "Escape";
 var spaceCode = "Space";
 var closeModalCodes = [enterCode, escapeCode, spaceCode];
+
+function chainAccessor(data, properties) {
+    let value = data;
+    for(let x=0; x<properties.length; x++) {
+        value = value && value[properties[x]];
+    }
+    return value;
+}
+
+// Frequency at which the audio notification sounds
+// Values can be "none", "once", or "repeating"
+var audioNotificationFrequency = "once";
+// Location of audio file to be played during audio notification
+var audioNotificationFile = chainAccessor(currentScript, "dataset", "audioNotificationFile");
 
 function Modal(){
     this.msgQueue = [];
@@ -139,8 +147,8 @@ Modal.prototype.stopFlashTab = function stopFlashTab() {
 };
 
 function gentleAlert(msg) {
-    audioNotificationFrequency = currentScript.dataset.audioNotificationFrequency;
-    modalTimeout = currentScript.dataset.modalTimeout || modalTimeout;
+    audioNotificationFrequency = chainAccessor(currentScript, "dataset", "audioNotificationFrequency");
+    modalTimeout = chainAccessor(currentScript, "dataset", "modalTimeout") || modalTimeout;
     if (modal === undefined) {
         modal = new Modal();
     }
@@ -152,5 +160,8 @@ if (typeof window !== "undefined" && window.alert != "undefined") {
 }
 
 module.exports = {
-    Modal: Modal
+    modalHTML: modalHTML,
+    modalTimeout: modalTimeout,
+    flashInterval: flashInterval,
+    Modal: Modal,
 };
