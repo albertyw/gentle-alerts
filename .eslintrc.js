@@ -28,6 +28,7 @@ module.exports = {
         "it": true,
         "describe": true,
         "beforeEach": true,
+        "afterEach": true,
         "chai": true,
         "jQuery": true,
         "chrome": true,
