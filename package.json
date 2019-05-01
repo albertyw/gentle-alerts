@@ -3,7 +3,7 @@
   "version": "1.2.2",
   "description": "Convert alerts into gentle notifications",
   "scripts": {
-    "cover": "nyc --instrument false mochify -R dot --transform [babelify --ignore [ test ] --plugins [ babel-plugin-istanbul ] ]",
+    "cover": "nyc --instrument false --reporter=lcov mochify -R dot --transform [babelify --ignore [ test ] --plugins [ babel-plugin-istanbul ] ]",
     "test": "npm run uglify && npm run eslint && npm run cover",
     "eslint": "eslint gentle-alerts test",
     "uglify": "browserify gentle-alerts/script.js | uglifyjs --compress --mangle --wrap GentleAlerts -o gentle-alerts/gentle-alerts.min.js",
