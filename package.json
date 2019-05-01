@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/albertyw/gentle-alerts#readme",
   "devDependencies": {
+    "browserify": "^16.2.3",
     "chai": "^4.2.0",
     "eslint": "^5.16.0",
     "jquery": "^3.4.0",
