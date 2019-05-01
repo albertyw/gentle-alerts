@@ -26,8 +26,7 @@
     "chai": "^4.2.0",
     "eslint": "^5.16.0",
     "jquery": "^3.4.0",
-    "mocha": "^6.1.4",
-    "mocha-headless-chrome": "^2.0.2",
+    "mochify": "^6.2.0",
     "nyc": "^14.0.0",
     "uglify-js": "^3.5.9"
   },
