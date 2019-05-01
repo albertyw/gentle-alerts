@@ -1,6 +1,8 @@
 module.exports = {
     "env": {
-        "browser": true
+        "browser": true,
+        "es6": true,
+        "node": true
     },
     "extends": "eslint:recommended",
     "rules": {
@@ -26,6 +28,7 @@ module.exports = {
         "it": true,
         "describe": true,
         "beforeEach": true,
+        "afterEach": true,
         "chai": true,
         "jQuery": true,
         "chrome": true,

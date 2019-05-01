@@ -3,12 +3,10 @@
   "version": "1.2.2",
   "description": "Convert alerts into gentle notifications",
   "scripts": {
-    "test": "npm run uglify && npm run eslint && npm run test-bdd",
+    "cover": "nyc --instrument false --reporter=lcov mochify -R dot --transform [babelify --ignore [ test ] --plugins [ babel-plugin-istanbul ] ]",
+    "test": "npm run uglify && npm run eslint && npm run cover",
     "eslint": "eslint gentle-alerts test",
-    "test-bdd": "npm run nyc-instrument && npm run mocha && nyc report -r text -r lcov",
-    "nyc-instrument": "nyc instrument ./gentle-alerts ./instrumented",
-    "mocha": "mocha-headless-chrome -f ./test/index.htm -c .nyc_output/coverage.json",
-    "uglify": "uglifyjs --compress --mangle --wrap GentleAlerts -o gentle-alerts/gentle-alerts.min.js -- gentle-alerts/script.js",
+    "uglify": "browserify gentle-alerts/script.js | uglifyjs --compress --mangle --wrap GentleAlerts -o gentle-alerts/gentle-alerts.min.js",
     "package": "npm run clean && npm run uglify && zip -r gentle-alerts.zip gentle-alerts",
     "clean": "rm -f gentle-alerts/gentle-alerts.min.js && rm -f gentle-alerts.zip && find | grep DS | xargs rm -f"
   },
@@ -23,13 +21,17 @@
   },
   "homepage": "https://github.com/albertyw/gentle-alerts#readme",
   "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "babel-plugin-istanbul": "^5.1.3",
+    "babelify": "^10.0.0",
+    "browserify": "^16.2.3",
     "chai": "^4.2.0",
     "eslint": "^5.16.0",
     "jquery": "^3.4.0",
-    "mocha": "^6.1.4",
-    "mocha-headless-chrome": "^2.0.2",
+    "mochify": "^6.2.0",
     "nyc": "^14.0.0",
-    "uglify-js": "^3.5.9"
+    "sinon": "^7.3.2",
+    "uglify-es": "^3.3.9"
   },
   "engines": {
     "node": ">=8"
