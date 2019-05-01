@@ -6,7 +6,7 @@
     "cover": "nyc --instrument false mochify -R dot",
     "test": "npm run uglify && npm run eslint && npm run cover",
     "eslint": "eslint gentle-alerts test",
-    "uglify": "uglifyjs --compress --mangle --wrap GentleAlerts -o gentle-alerts/gentle-alerts.min.js -- gentle-alerts/script.js",
+    "uglify": "browserify gentle-alerts/script.js | uglifyjs --compress --mangle --wrap GentleAlerts -o gentle-alerts/gentle-alerts.min.js",
     "package": "npm run clean && npm run uglify && zip -r gentle-alerts.zip gentle-alerts",
     "clean": "rm -f gentle-alerts/gentle-alerts.min.js && rm -f gentle-alerts.zip && find | grep DS | xargs rm -f"
   },
