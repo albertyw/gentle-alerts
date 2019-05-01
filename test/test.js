@@ -1,4 +1,9 @@
-var expect = chai.expect;
+var $ = require("jquery");
+var expect = require("chai").expect;
+var sinon = require("sinon");
+
+var script = require("../gentle-alerts/script");
+var Modal = script.Modal;
 
 function resetModals() {
     modal = undefined;
@@ -8,7 +13,7 @@ function resetModals() {
 describe("modalHTML", function() {
     beforeEach(resetModals);
     it("should be available", function() {
-        expect(modalHTML).to.have.length.above(0);
+        expect(script.modalHTML).to.have.length.above(0);
     });
 });
 
@@ -44,7 +49,13 @@ describe("Modal.prototype.generateModal", function() {
 });
 
 describe("alert", function() {
-    beforeEach(resetModals);
+    beforeEach(() => {
+        this.clock = sinon.useFakeTimers();
+        resetModals();
+    });
+    afterEach(() => {
+        this.clock.restore();
+    });
     function closeAndAssertClosed(triggerEvent, done) {
         $.when($("#gentle-alerts-modal").trigger(triggerEvent)).done(function(){
             expect($("#gentle-alerts-modal-content-text").length).to.equal(0);
@@ -83,32 +94,23 @@ describe("alert", function() {
     });
     it("can hide the modal with a keypress", function(done) {
         alert("alert text");
-        var e = jQuery.Event("keyup", {code: "Space"});
+        var e = $.Event("keyup", {code: "Space"});
         closeAndAssertClosed(e, done);
     });
-    it("can hide the modal after a timeout", function(done) {
-        var originalModalTimeout = window.modalTimeout;
-        window.modalTimeout = 20;
+    it("can hide the modal after a timeout", (done) => {
         alert("alert text");
-        setTimeout(function() {
-            expect($("#gentle-alerts-modal").length).to.equal(0);
-            window.modalTimeout = originalModalTimeout;
-            closeAndAssertClosed("click", done);
-        }, parseInt(window.modalTimeout, 10) + 10);
+        this.clock.tick(script.modalTimeout + 10);
+        expect($("#gentle-alerts-modal").length).to.equal(0);
+        closeAndAssertClosed("click", done);
     });
-    it("will flash the title", function(done) {
-        var originalFlashInterval = flashInterval;
-        window.flashInterval = 10;
+    it("will flash the title", (done) => {
         var originalTitle = document.title;
         alert("alert text");
         expect(document.title).to.equal(originalTitle);
-        setTimeout(function() {
-            expect(document.title).to.not.equal(originalTitle);
-            setTimeout(function() {
-                expect(document.title).to.equal(originalTitle);
-                flashInterval = originalFlashInterval;
-                closeAndAssertClosed("click", done);
-            }, flashInterval);
-        }, flashInterval * 6.5);
+        this.clock.tick(script.flashInterval * 6.5);
+        expect(document.title).to.not.equal(originalTitle);
+        this.clock.tick(script.flashInterval);
+        expect(document.title).to.equal(originalTitle);
+        closeAndAssertClosed("click", done);
     });
 });
