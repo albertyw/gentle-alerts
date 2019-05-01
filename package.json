@@ -3,11 +3,9 @@
   "version": "1.2.2",
   "description": "Convert alerts into gentle notifications",
   "scripts": {
-    "test": "npm run uglify && npm run eslint && npm run test-bdd",
+    "cover": "nyc --instrument false mochify -R dot",
+    "test": "npm run uglify && npm run eslint && npm run cover",
     "eslint": "eslint gentle-alerts test",
-    "test-bdd": "npm run nyc-instrument && npm run mocha && nyc report -r text -r lcov",
-    "nyc-instrument": "nyc instrument ./gentle-alerts ./instrumented",
-    "mocha": "mocha-headless-chrome -f ./test/index.htm -c .nyc_output/coverage.json",
     "uglify": "uglifyjs --compress --mangle --wrap GentleAlerts -o gentle-alerts/gentle-alerts.min.js -- gentle-alerts/script.js",
     "package": "npm run clean && npm run uglify && zip -r gentle-alerts.zip gentle-alerts",
     "clean": "rm -f gentle-alerts/gentle-alerts.min.js && rm -f gentle-alerts.zip && find | grep DS | xargs rm -f"
@@ -28,6 +26,7 @@
     "jquery": "^3.4.0",
     "mochify": "^6.2.0",
     "nyc": "^14.0.0",
+    "sinon": "^7.3.2",
     "uglify-es": "^3.3.9"
   },
   "engines": {
