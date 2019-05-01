@@ -28,7 +28,7 @@
     "jquery": "^3.4.0",
     "mochify": "^6.2.0",
     "nyc": "^14.0.0",
-    "uglify-js": "^3.5.9"
+    "uglify-es": "^3.3.9"
   },
   "engines": {
     "node": ">=8"
