@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+v1.2.3
+------
+
+ - Switch to use mochify for testing
+ - Update dependencies
+ - Refactors
+
+
 v1.2.2
 ------
 

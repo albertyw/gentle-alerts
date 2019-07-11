@@ -1,6 +1,6 @@
 {
   "name": "gentle-alerts",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Convert alerts into gentle notifications",
   "scripts": {
     "cover": "nyc --instrument false --reporter=lcov mochify -R dot --transform [babelify --ignore [ test ] --plugins [ babel-plugin-istanbul ] ]",
