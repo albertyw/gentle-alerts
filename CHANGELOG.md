@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+v1.2.4
+------
+
+ - Update dependencies
+
+
 v1.2.3
 ------
 
