@@ -1,0 +1,45 @@
+kind: pipeline
+type: docker
+name: test
+
+volumes:
+  - name: npmrc
+    host:
+      path: /home/albertyw/.ssh/other/npmrc
+
+steps:
+  - name: Test Node
+    image: node:14
+    commands:
+      - apt-get update && apt-get install -y fonts-liberation libappindicator3-1 libasound2 libatk-bridge2.0-0 libcups2 libgbm1 libgtk-3-0 libnspr4 libnss3 libx11-xcb1 libxss1 libxtst6 lsb-release xdg-utils
+      - npm install
+      - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > "${HOME}/bin/cc-test-reporter" && chmod +x "${HOME}/bin/cc-test-reporter"
+      - chmod +x "${HOME}/bin/cc-test-reporter"
+      - cc-test-reporter before-build
+      - npm test
+      - exitcode="$?"
+      - cc-test-reporter after-build --exit-code "$exitcode"
+    environment:
+      CC_TEST_REPORTER_ID: 272eecf2546da3d8959201092992794402b86f42235d3e1b489a2a5c67e23ad4
+
+  - name: Test Packaging
+    image: node:14
+    commands:
+      - apt-get update && apt-get install -y zip
+      - npm install
+      - npm run package
+
+  - name: Publish Node
+    image: node:14
+    commands:
+      - npm whoami
+      - npm publish
+    volumes:
+      - name: npmrc
+        path: /root/.npmrc
+    depends_on:
+      - Test Node
+      - Test Packaging
+    when:
+      event:
+        - tag
