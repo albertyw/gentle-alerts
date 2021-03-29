@@ -42,13 +42,6 @@ Testing
 npm test
 ```
 
-Note that on Codeship, this script needs to be run to downgrade the preinstalled Phantomjs version:
-
-```
-export PHANTOMJS_VERSION=1.9.7
-\curl -sSL https://raw.githubusercontent.com/codeship/scripts/master/packages/phantomjs.sh | bash -s
-```
-
 Releasing a new version
 -----------------------
 
