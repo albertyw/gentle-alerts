@@ -22,6 +22,13 @@ steps:
     environment:
       CC_TEST_REPORTER_ID: 272eecf2546da3d8959201092992794402b86f42235d3e1b489a2a5c67e23ad4
 
+  - name: Test Packaging
+    image: node:14
+    commands:
+      - apt-get update && apt-get install -y zip
+      - npm install
+      - npm run package
+
   - name: Publish Node
     image: node:14
     commands:
@@ -30,6 +37,9 @@ steps:
     volumes:
       - name: npmrc
         path: /root/.npmrc
+    depends_on:
+      - Test Node
+      - Test Packaging
     when:
       event:
         - tag
