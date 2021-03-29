@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+v1.2.6 (2021-03-29)
+-------------------
+
+ - Update dependencies
+ - Switch to Drone CI for testing
+
+
 v1.2.5
 ------
 
