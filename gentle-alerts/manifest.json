@@ -28,7 +28,6 @@
     "matches": ["<all_urls>"]
   }],
   "options_ui": {
-    "page": "options.htm",
-    "chrome_style": true
+    "page": "options.htm"
   }
 }
