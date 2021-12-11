@@ -23,6 +23,9 @@
     "tabs",
     "storage"
   ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "web_accessible_resources": [{
     "resources": ["gentle-alerts.min.js", "gentle-alerts.css", "notification.ogg", "options.js"],
     "matches": ["<all_urls>"]
