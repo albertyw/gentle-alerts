@@ -9,7 +9,7 @@ volumes:
 
 steps:
   - name: Test Node
-    image: satantime/puppeteer-node:17.2-bullseye-slim
+    image: satantime/puppeteer-node:16-bullseye-slim
     commands:
       - npm version
       - npm ci
