@@ -11,7 +11,7 @@ steps:
   - name: Test Node
     image: satantime/puppeteer-node:16-bullseye-slim
     commands:
-      - npm version
+      - apt-get update && apt-get install -y zip
       - npm ci
       - npm run package
       - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > "${HOME}/bin/cc-test-reporter" && chmod +x "${HOME}/bin/cc-test-reporter"
