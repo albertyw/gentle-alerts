@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+v1.3.0 (2021-12-14)
+-------------------
+
+ - Update to chrome extensions manifest v3
+ - Optimize build and test
+ - Dependency updates
+
+
 v1.2.8 (2021-10-20)
 -------------------
 
