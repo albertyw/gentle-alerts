@@ -13,6 +13,7 @@ steps:
     commands:
       - npm version
       - npm ci
+      - npm run package
       - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > "${HOME}/bin/cc-test-reporter" && chmod +x "${HOME}/bin/cc-test-reporter"
       - chmod +x "${HOME}/bin/cc-test-reporter"
       - cc-test-reporter before-build
@@ -21,14 +22,6 @@ steps:
       - cc-test-reporter after-build --exit-code "$exitcode"
     environment:
       CC_TEST_REPORTER_ID: 272eecf2546da3d8959201092992794402b86f42235d3e1b489a2a5c67e23ad4
-
-  - name: Test Packaging
-    image: node:16
-    commands:
-      - npm version
-      - apt-get update && apt-get install -y zip
-      - npm ci
-      - npm run package
 
   - name: Publish Node
     image: node:16
@@ -40,7 +33,6 @@ steps:
         path: /root/.npmrc
     depends_on:
       - Test Node
-      - Test Packaging
     when:
       event:
         - tag
