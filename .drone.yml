@@ -9,7 +9,7 @@ volumes:
 
 steps:
   - name: Test Node
-    image: satantime/puppeteer-node:16-bullseye-slim
+    image: satantime/puppeteer-node:18-bullseye-slim
     commands:
       - apt-get update && apt-get install -y zip
       - npm ci
@@ -24,7 +24,7 @@ steps:
       CC_TEST_REPORTER_ID: 272eecf2546da3d8959201092992794402b86f42235d3e1b489a2a5c67e23ad4
 
   - name: Publish Node
-    image: node:16
+    image: node:18
     commands:
       - npm whoami
       - npm publish
