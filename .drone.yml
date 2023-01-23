@@ -14,7 +14,7 @@ steps:
       - apt-get update && apt-get install -y zip chromium
       - npm ci
       - npm run package
-      - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > "${HOME}/bin/cc-test-reporter" && chmod +x "${HOME}/bin/cc-test-reporter"
+      - curl -L "https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-$(dpkg --print-architecture)" > "${HOME}/bin/cc-test-reporter" && chmod +x "${HOME}/bin/cc-test-reporter"
       - chmod +x "${HOME}/bin/cc-test-reporter"
       - cc-test-reporter before-build
       - npm test
