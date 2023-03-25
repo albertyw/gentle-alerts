@@ -2,11 +2,6 @@ kind: pipeline
 type: docker
 name: test
 
-volumes:
-  - name: npmrc
-    host:
-      path: /home/albertyw/.ssh/other/npmrc
-
 steps:
   - name: Test Node
     image: satantime/puppeteer-node:18-bullseye-slim
@@ -26,13 +21,14 @@ steps:
       CHROME_PATH: /usr/bin/chromium
 
   - name: Publish Node
+    environment:
+      NPM_TOKEN:
+        from_secret: npm_token
     image: node:18
     commands:
+      - echo "//registry.npmjs.org/:_authToken=$${NPM_TOKEN}" > ~/.npmrc
       - npm whoami
       - npm publish
-    volumes:
-      - name: npmrc
-        path: /root/.npmrc
     depends_on:
       - Test Node
     when:
