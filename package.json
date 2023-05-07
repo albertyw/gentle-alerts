@@ -9,10 +9,7 @@
     "terser": "browserify gentle-alerts/script.js | terser --compress --mangle --wrap GentleAlerts -o gentle-alerts/gentle-alerts.min.js",
     "package": "npm run clean && npm run terser && zip -r gentle-alerts.zip gentle-alerts",
     "clean": "rm -f gentle-alerts/gentle-alerts.min.js && rm -f gentle-alerts.zip && find | grep DS | xargs rm -f",
-    "build": "webpack --mode=production --node-env=production",
-    "build:dev": "webpack --mode=development",
-    "build:prod": "webpack --mode=production --node-env=production",
-    "watch": "webpack --watch"
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
