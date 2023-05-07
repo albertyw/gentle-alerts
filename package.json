@@ -8,7 +8,11 @@
     "eslint": "eslint gentle-alerts test",
     "terser": "browserify gentle-alerts/script.js | terser --compress --mangle --wrap GentleAlerts -o gentle-alerts/gentle-alerts.min.js",
     "package": "npm run clean && npm run terser && zip -r gentle-alerts.zip gentle-alerts",
-    "clean": "rm -f gentle-alerts/gentle-alerts.min.js && rm -f gentle-alerts.zip && find | grep DS | xargs rm -f"
+    "clean": "rm -f gentle-alerts/gentle-alerts.min.js && rm -f gentle-alerts.zip && find | grep DS | xargs rm -f",
+    "build": "webpack --mode=production --node-env=production",
+    "build:dev": "webpack --mode=development",
+    "build:prod": "webpack --mode=production --node-env=production",
+    "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
@@ -31,6 +35,7 @@
     "jquery": "^3.4.1",
     "mochify": "^9.0.0",
     "nyc": "^15.1.0",
+    "prettier": "^2.8.8",
     "sinon": "^15.0.0",
     "terser": "^5.10.0",
     "webpack": "^5.82.0",

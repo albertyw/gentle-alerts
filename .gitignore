@@ -62,5 +62,6 @@ gentle-alerts.zip
 *.crx
 
 # Test files
+dist
 instrumented
 gentle-alerts.min.js
