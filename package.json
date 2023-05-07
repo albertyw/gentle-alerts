@@ -4,12 +4,12 @@
   "description": "Convert alerts into gentle notifications",
   "scripts": {
     "cover": "nyc --instrument false --reporter=lcov mochify -R dot --transform [babelify --ignore [ test ] --plugins [ babel-plugin-istanbul ] ] --allow-chrome-as-root",
-    "test": "npm run terser && npm run eslint && npm run cover",
+    "test": "npm run build && npm run eslint && npm run cover",
     "eslint": "eslint gentle-alerts test",
     "terser": "browserify gentle-alerts/script.js | terser --compress --mangle --wrap GentleAlerts -o gentle-alerts/gentle-alerts.min.js",
-    "package": "npm run clean && npm run terser && zip -r gentle-alerts.zip gentle-alerts",
+    "package": "npm run clean && npm run build && zip -r gentle-alerts.zip gentle-alerts",
     "clean": "rm -f gentle-alerts/gentle-alerts.min.js && rm -f gentle-alerts.zip && find | grep DS | xargs rm -f",
-    "build": "webpack"
+    "build": "webpack && cp dist/main.js gentle-alerts/gentle-alerts.min.js"
   },
   "repository": {
     "type": "git",
