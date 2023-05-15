@@ -24,6 +24,7 @@
     "babel-plugin-istanbul": "^6.0.0",
     "babelify": "^10.0.0",
     "chai": "^4.2.0",
+    "css-minimizer-webpack-plugin": "^5.0.0",
     "eslint": "^8.0.1",
     "jquery": "^3.4.1",
     "mochify": "^9.0.0",

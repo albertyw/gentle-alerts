@@ -2,6 +2,8 @@
 
 const path = require("path");
 
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+
 const config = {
   entry: "./gentle-alerts/script.js",
   mode: "production",
@@ -21,6 +23,12 @@ const config = {
 
       // Add your rules for custom modules here
       // Learn more about loaders from https://webpack.js.org/loaders/
+    ],
+  },
+  optimization: {
+    minimizer: [
+      '...',
+      new CssMinimizerPlugin(),
     ],
   },
 };
