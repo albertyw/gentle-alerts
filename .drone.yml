@@ -4,7 +4,7 @@ name: test
 
 steps:
   - name: Test Node
-    image: satantime/puppeteer-node:18-bullseye-slim
+    image: satantime/puppeteer-node:18-bookworm-slim
     commands:
       - apt-get update && apt-get install -y zip chromium
       - npm ci
