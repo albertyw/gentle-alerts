@@ -24,7 +24,7 @@ steps:
     environment:
       NPM_TOKEN:
         from_secret: npm_token
-    image: node:20
+    image: node:21
     commands:
       - echo "//registry.npmjs.org/:_authToken=$${NPM_TOKEN}" > ~/.npmrc
       - npm whoami
