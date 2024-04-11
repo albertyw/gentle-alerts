@@ -5,7 +5,7 @@
   "scripts": {
     "cover": "nyc --instrument false --reporter=lcov mochify -R dot --transform [babelify --ignore [ test ] --plugins [ babel-plugin-istanbul ] ] --allow-chrome-as-root",
     "test": "npm run build && npm run eslint && npm run cover",
-    "eslint": "eslint gentle-alerts test",
+    "eslint": "eslint -c .eslint.config.js gentle-alerts test",
     "package": "npm run clean && npm run build && zip -r gentle-alerts.zip gentle-alerts",
     "clean": "rm -f gentle-alerts/gentle-alerts.min.js && rm -f gentle-alerts.zip && find | grep DS | xargs rm -f",
     "build": "webpack && cp dist/main.js gentle-alerts/gentle-alerts.min.js && rm -r dist"
@@ -25,7 +25,8 @@
     "babelify": "^10.0.0",
     "chai": "^4.2.0",
     "css-minimizer-webpack-plugin": "^6.0.0",
-    "eslint": "^8.0.1",
+    "eslint": "^9.0.0",
+    "globals": "^15.0.0",
     "jquery": "^3.4.1",
     "mochify": "^9.0.0",
     "nyc": "^15.1.0",
