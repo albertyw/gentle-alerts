@@ -1,6 +1,15 @@
 Change Log
 ==========
 
+v1.3.2 (2024-04-13)
+-------------------
+
+ - Convert to an ESM module
+ - Convert to webpack
+ - Convert testing from mochify to wdio
+ - Dependency updates
+
+
 v1.3.1 (2023-05-05)
 -------------------
 
