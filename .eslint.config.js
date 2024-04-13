@@ -1,5 +1,5 @@
-const globals = require("globals");
-const js = require("@eslint/js");
+import globals from "globals";
+import js from "@eslint/js";
 
 let globalVars = globals.browser;
 globalVars = {...globalVars, ...{
@@ -20,7 +20,7 @@ globalVars = {...globalVars, ...{
   "modal": true,
 }};
 
-module.exports = [
+export default [
   js.configs.recommended,
   {
     "rules": {

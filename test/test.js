@@ -1,9 +1,10 @@
-var $ = require("jquery");
-var expect = require("chai").expect;
-var sinon = require("sinon");
+import $ from "jquery";
+import { expect } from "chai";
+import sinon from "sinon";
 
-var script = require("../gentle-alerts/script");
+import * as script from "../gentle-alerts/script.js";
 var Modal = script.Modal;
+var modal = undefined;
 
 function resetModals() {
     modal = undefined;

@@ -1,14 +1,14 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
 
-const path = require("path");
+import path from "path";
 
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 
 const config = {
   entry: "./gentle-alerts/script.js",
   mode: "production",
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve("dist"),
   },
   plugins: [
     // Add your plugins here
@@ -33,6 +33,6 @@ const config = {
   },
 };
 
-module.exports = () => {
+export default () => {
   return config;
 };
