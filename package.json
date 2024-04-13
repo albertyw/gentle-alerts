@@ -8,7 +8,8 @@
     "eslint": "eslint -c .eslint.config.js gentle-alerts test",
     "package": "npm run clean && npm run build && zip -r gentle-alerts.zip gentle-alerts",
     "clean": "rm -f gentle-alerts/gentle-alerts.min.js && rm -f gentle-alerts.zip && find | grep DS | xargs rm -f",
-    "build": "webpack && cp dist/main.js gentle-alerts/gentle-alerts.min.js && rm -r dist"
+    "build": "webpack && cp dist/main.js gentle-alerts/gentle-alerts.min.js && rm -r dist",
+    "wdio": "wdio run ./wdio.conf.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,10 @@
   },
   "homepage": "https://github.com/albertyw/gentle-alerts#readme",
   "devDependencies": {
+    "@wdio/browser-runner": "^8.36.0",
+    "@wdio/cli": "^8.36.0",
+    "@wdio/mocha-framework": "^8.36.0",
+    "@wdio/spec-reporter": "^8.36.0",
     "babel-plugin-istanbul": "^6.0.0",
     "babelify": "^10.0.0",
     "chai": "^4.2.0",
