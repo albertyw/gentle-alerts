@@ -1,5 +1,5 @@
 // HTML to show the modal
-var modalHTML = "\
+export var modalHTML = "\
 <div id=\"gentle-alerts-modal-content\">\
   <p id=\"gentle-alerts-modal-content-text\"></p>\
 </div>";
@@ -9,12 +9,12 @@ var modal = undefined;
 var currentScript = document.currentScript;
 
 // Interval to wait within a double flash
-var flashInterval = 1250;
+export var flashInterval = 1250;
 // Interval to wait between double flashes
 var flashWaitMultiple = 6;
 
 // Time to wait until notification disappears
-var modalTimeout = 30 * 60 * 1000;
+export var modalTimeout = 30 * 60 * 1000;
 
 // Keys to close modals
 var enterCode = "Enter";
@@ -36,7 +36,7 @@ var audioNotificationFrequency = "once";
 // Location of audio file to be played during audio notification
 var audioNotificationFile = chainAccessor(currentScript, "dataset", "audioNotificationFile");
 
-function Modal(){
+export function Modal(){
     this.msgQueue = [];
     this.modalElement = undefined;
 }
@@ -158,10 +158,3 @@ function gentleAlert(msg) {
 if (typeof window !== "undefined" && window.alert != "undefined") {
     window.alert = gentleAlert;
 }
-
-module.exports = {
-    modalHTML: modalHTML,
-    modalTimeout: modalTimeout,
-    flashInterval: flashInterval,
-    Modal: Modal,
-};

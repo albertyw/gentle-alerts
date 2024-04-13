@@ -1,9 +1,10 @@
-var $ = require("jquery");
-var expect = require("chai").expect;
-var sinon = require("sinon");
+import $ from "jquery";
+import { expect } from "chai";
+import sinon from "sinon";
 
-var script = require("../gentle-alerts/script");
+import * as script from "../gentle-alerts/script.js";
 var Modal = script.Modal;
+var modal = undefined; // eslint-disable-line no-unused-vars
 
 function resetModals() {
     modal = undefined;
@@ -56,54 +57,50 @@ describe("alert", function() {
     afterEach(() => {
         this.clock.restore();
     });
-    function closeAndAssertClosed(triggerEvent, done) {
-        $.when($("#gentle-alerts-modal").trigger(triggerEvent)).done(function(){
-            expect($("#gentle-alerts-modal-content-text").length).to.equal(0);
-            expect($("#gentle-alerts-modal").length).to.equal(0);
-            done();
-        });
+    async function closeAndAssertClosed(triggerEvent) {
+        await Promise.resolve($("#gentle-alerts-modal").trigger(triggerEvent));
+        expect($("#gentle-alerts-modal-content-text").length).to.equal(0);
+        expect($("#gentle-alerts-modal").length).to.equal(0);
     }
-    it("can show modal", function(done) {
+    it("can show modal", async function() {
         alert("alert text");
         expect($("#gentle-alerts-modal-content-text").length).to.equal(1);
         expect($("#gentle-alerts-modal-content-text").text()).to.equal("alert text");
-        closeAndAssertClosed("click", done);
+        await closeAndAssertClosed("click");
     });
-    it("can hide the modal with a click", function(done) {
+    it("can hide the modal with a click", async function() {
         alert("alert text");
-        closeAndAssertClosed("click", done);
+        await closeAndAssertClosed("click");
     });
-    it("can queue and show two modals", function(done) {
+    it("can queue and show two modals", async function() {
         alert("alert test 1");
         alert("alert test 2");
         expect($("#gentle-alerts-modal").length).to.equal(1);
         expect($("#gentle-alerts-modal-content-text").text()).to.equal("alert test 1");
-        $.when($("#gentle-alerts-modal").trigger("click")).done(function(){
-            expect($("#gentle-alerts-modal").length).to.equal(1);
-            expect($("#gentle-alerts-modal-content-text").text()).to.equal("alert test 2");
-            closeAndAssertClosed("click", done);
-        });
+        await Promise.resolve($("#gentle-alerts-modal").trigger("click"));
+        expect($("#gentle-alerts-modal").length).to.equal(1);
+        expect($("#gentle-alerts-modal-content-text").text()).to.equal("alert test 2");
+        await closeAndAssertClosed("click");
     });
-    it("will not hide the modal when the modal itself is clicked", function(done) {
+    it("will not hide the modal when the modal itself is clicked", async function() {
         alert("alert text");
-        $.when($("#gentle-alerts-modal-content").trigger("click")).done(function(){
-            expect($("#gentle-alerts-modal-content-text").length).to.equal(1);
-            expect($("#gentle-alerts-modal-content-text").text()).to.equal("alert text");
-            closeAndAssertClosed("click", done);
-        });
+        await Promise.resolve($("#gentle-alerts-modal-content").trigger("click"));
+        expect($("#gentle-alerts-modal-content-text").length).to.equal(1);
+        expect($("#gentle-alerts-modal-content-text").text()).to.equal("alert text");
+        await closeAndAssertClosed("click");
     });
-    it("can hide the modal with a keypress", function(done) {
+    it("can hide the modal with a keypress", async function() {
         alert("alert text");
         var e = $.Event("keyup", {code: "Space"});
-        closeAndAssertClosed(e, done);
+        await closeAndAssertClosed(e);
     });
-    it("can hide the modal after a timeout", (done) => {
+    it("can hide the modal after a timeout", async () => {
         alert("alert text");
         this.clock.tick(script.modalTimeout + 10);
         expect($("#gentle-alerts-modal").length).to.equal(0);
-        closeAndAssertClosed("click", done);
+        await closeAndAssertClosed("click");
     });
-    it("will flash the title", (done) => {
+    it("will flash the title", async () => {
         var originalTitle = document.title;
         alert("alert text");
         expect(document.title).to.equal(originalTitle);
@@ -111,6 +108,6 @@ describe("alert", function() {
         expect(document.title).to.not.equal(originalTitle);
         this.clock.tick(script.flashInterval);
         expect(document.title).to.equal(originalTitle);
-        closeAndAssertClosed("click", done);
+        await closeAndAssertClosed("click");
     });
 });

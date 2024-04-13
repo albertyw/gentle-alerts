@@ -2,13 +2,14 @@
   "name": "gentle-alerts",
   "version": "1.3.1",
   "description": "Convert alerts into gentle notifications",
+  "type": "module",
   "scripts": {
-    "cover": "nyc --instrument false --reporter=lcov mochify -R dot --transform [babelify --ignore [ test ] --plugins [ babel-plugin-istanbul ] ] --allow-chrome-as-root",
-    "test": "npm run build && npm run eslint && npm run cover",
+    "test": "npm run build && npm run eslint && npm run wdio",
     "eslint": "eslint -c .eslint.config.js gentle-alerts test",
     "package": "npm run clean && npm run build && zip -r gentle-alerts.zip gentle-alerts",
     "clean": "rm -f gentle-alerts/gentle-alerts.min.js && rm -f gentle-alerts.zip && find | grep DS | xargs rm -f",
-    "build": "webpack && cp dist/main.js gentle-alerts/gentle-alerts.min.js && rm -r dist"
+    "build": "webpack && cp dist/main.js gentle-alerts/gentle-alerts.min.js && rm -r dist",
+    "wdio": "wdio run ./wdio.conf.js"
   },
   "repository": {
     "type": "git",
@@ -21,15 +22,15 @@
   },
   "homepage": "https://github.com/albertyw/gentle-alerts#readme",
   "devDependencies": {
-    "babel-plugin-istanbul": "^6.0.0",
-    "babelify": "^10.0.0",
+    "@wdio/browser-runner": "^8.36.0",
+    "@wdio/cli": "^8.36.0",
+    "@wdio/mocha-framework": "^8.36.0",
+    "@wdio/spec-reporter": "^8.36.0",
     "chai": "^4.2.0",
     "css-minimizer-webpack-plugin": "^6.0.0",
     "eslint": "^9.0.0",
     "globals": "^15.0.0",
     "jquery": "^3.4.1",
-    "mochify": "^9.0.0",
-    "nyc": "^15.1.0",
     "sinon": "^17.0.0",
     "webpack": "^5.82.0",
     "webpack-cli": "^5.1.0"
