@@ -4,7 +4,13 @@ export const config = {
     // Runner Configuration
     // ====================
     // WebdriverIO supports running e2e tests as well as unit and component tests.
-    runner: 'browser',
+    runner: ['browser', {
+        preset: process.env.WDIO_PRESET,
+        coverage: {
+            enabled: true,
+            reportsDirectory: '.coverage',
+        },
+    }],
     //
     // ==================
     // Specify Test Files
