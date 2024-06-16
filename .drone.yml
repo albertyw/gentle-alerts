@@ -4,7 +4,7 @@ name: test
 
 steps:
   - name: Test Node
-    image: satantime/puppeteer-node:21-bookworm-slim
+    image: satantime/puppeteer-node:22-bookworm-slim
     commands:
       - apt-get update && apt-get install -y zip
       - npm ci
@@ -22,7 +22,7 @@ steps:
     environment:
       NPM_TOKEN:
         from_secret: npm_token
-    image: node:21
+    image: node:22
     commands:
       - echo "//registry.npmjs.org/:_authToken=$${NPM_TOKEN}" > ~/.npmrc
       - npm whoami
