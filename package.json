@@ -26,7 +26,7 @@
     "@wdio/cli": "^8.36.0",
     "@wdio/mocha-framework": "^8.36.0",
     "@wdio/spec-reporter": "^8.36.0",
-    "chai": "^4.2.0",
+    "chai": "^5.0.0",
     "css-minimizer-webpack-plugin": "^6.0.0",
     "eslint": "^9.0.0",
     "globals": "^15.0.0",
