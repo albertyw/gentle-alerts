@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+v1.3.3 (2024-09-08)
+-------------------
+
+ - Testing optimizations
+ - Update dependencies
+
+
 v1.3.2 (2024-04-13)
 -------------------
 
