@@ -33,7 +33,7 @@
     "jquery": "^3.4.1",
     "sinon": "^19.0.0",
     "webpack": "^5.82.0",
-    "webpack-cli": "^5.1.0"
+    "webpack-cli": "^6.0.0"
   },
   "engines": {
     "node": ">=8"
