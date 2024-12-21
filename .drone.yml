@@ -4,7 +4,7 @@ name: test
 
 steps:
   - name: Test Node
-    image: satantime/puppeteer-node:22-bookworm-slim
+    image: satantime/puppeteer-node:23-bookworm-slim
     commands:
       - apt-get update && apt-get install -y zip
       - npm ci
