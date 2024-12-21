@@ -6,6 +6,7 @@ steps:
   - name: Test Node
     image: satantime/puppeteer-node:23-bookworm-slim
     commands:
+      - apt-get update && apt-get install -y xz-utils  # Remove when https://github.com/satanTime/puppeteer-node/issues/26 is resolved
       - apt-get update && apt-get install -y zip
       - npm ci
       - npm run package
