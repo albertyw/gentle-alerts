@@ -1,6 +1,15 @@
 Change Log
 ==========
 
+v1.3.4 (2025-05-31)
+-------------------
+
+ - Fix loading configuration
+ - Defer loading CSS until needed
+ - Update dependencies
+ - Clean up testing
+
+
 v1.3.3 (2024-09-08)
 -------------------
 
