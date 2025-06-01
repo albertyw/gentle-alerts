@@ -3,8 +3,8 @@ import { expect } from "chai";
 import sinon from "sinon";
 
 import * as script from "../gentle-alerts/script.js";
-var Modal = script.Modal;
-var modal = undefined; // eslint-disable-line no-unused-vars
+const Modal = script.Modal;
+let modal = undefined; // eslint-disable-line no-unused-vars
 
 function resetModals() {
     modal = undefined;
@@ -21,7 +21,7 @@ describe("modalHTML", function() {
 describe("Modal", function() {
     beforeEach(resetModals);
     it("can be initialized", function() {
-        var modal = new Modal();
+        const modal = new Modal();
         expect(modal.msgQueue).to.have.lengthOf(0);
         expect(modal.modalElement).to.be.undefined;
     });
@@ -30,7 +30,7 @@ describe("Modal", function() {
 describe("Modal.prototype.deleteModal", function() {
     beforeEach(resetModals);
     it("will not double delete", function() {
-        var modal = new Modal();
+        const modal = new Modal();
         expect(modal.modalElement).to.be.undefined;
         modal.deleteModal();
         expect(modal.modalElement).to.be.undefined;
@@ -40,7 +40,7 @@ describe("Modal.prototype.deleteModal", function() {
 describe("Modal.prototype.generateModal", function() {
     beforeEach(resetModals);
     it("will not double generate", function() {
-        var modal = new Modal();
+        const modal = new Modal();
         modal.queueMsg("test 1");
         modal.queueMsg("test 2");
         expect(modal.msgQueue).to.have.lengthOf(1);
@@ -91,7 +91,7 @@ describe("alert", function() {
     });
     it("can hide the modal with a keypress", async function() {
         alert("alert text");
-        var e = $.Event("keyup", {code: "Space"});
+        const e = $.Event("keyup", {code: "Space"});
         await closeAndAssertClosed(e);
     });
     it("can hide the modal after a timeout", async () => {
@@ -101,7 +101,7 @@ describe("alert", function() {
         await closeAndAssertClosed("click");
     });
     it("will flash the title", async () => {
-        var originalTitle = document.title;
+        const originalTitle = document.title;
         alert("alert text");
         expect(document.title).to.equal(originalTitle);
         this.clock.tick(script.flashInterval * 6.5);

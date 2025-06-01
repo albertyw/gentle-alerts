@@ -1,26 +1,26 @@
 // HTML to show the modal
-export var modalHTML = "\
+export const modalHTML = "\
 <div id=\"gentle-alerts-modal-content\">\
   <p id=\"gentle-alerts-modal-content-text\"></p>\
 </div>";
 // Global Modal value so that modal messages can be queued
-var modal = undefined;
+let modal = undefined;
 // Location to read user configs
-var currentScript = document.currentScript;
+const currentScript = document.currentScript;
 
 // Interval to wait within a double flash
-export var flashInterval = 1250;
+export const flashInterval = 1250;
 // Interval to wait between double flashes
-var flashWaitMultiple = 6;
+const flashWaitMultiple = 6;
 
 // Time to wait until notification disappears
-export var modalTimeout = 30 * 60 * 1000;
+export let modalTimeout = 30 * 60 * 1000;
 
 // Keys to close modals
-var enterCode = "Enter";
-var escapeCode = "Escape";
-var spaceCode = "Space";
-var closeModalCodes = [enterCode, escapeCode, spaceCode];
+const enterCode = "Enter";
+const escapeCode = "Escape";
+const spaceCode = "Space";
+const closeModalCodes = [enterCode, escapeCode, spaceCode];
 
 function chainAccessor(data, properties) {
     let value = data;
@@ -32,9 +32,9 @@ function chainAccessor(data, properties) {
 
 // Frequency at which the audio notification sounds
 // Values can be "none", "once", or "repeating"
-var audioNotificationFrequency = "once";
+let audioNotificationFrequency = "once";
 // Location of audio file to be played during audio notification
-var audioNotificationFile = chainAccessor(currentScript, "dataset", "audioNotificationFile");
+const audioNotificationFile = chainAccessor(currentScript, "dataset", "audioNotificationFile");
 
 export function Modal(){
     this.msgQueue = [];
@@ -49,11 +49,11 @@ Modal.prototype.queueMsg = function queueMsg(msg) {
 
 // Create a modal from modalHTML and append to the bottom of the document
 Modal.prototype.createModal = function createModal(msg) {
-    var span = document.createElement("span");
+    const span = document.createElement("span");
     span.id = "gentle-alerts-modal";
     span.innerHTML = modalHTML;
     document.documentElement.appendChild(span);
-    var modalContent = document.getElementById("gentle-alerts-modal-content-text");
+    const modalContent = document.getElementById("gentle-alerts-modal-content-text");
     modalContent.textContent = msg;
     this.modalElement = document.getElementById("gentle-alerts-modal");
     this.modalElement.style.display = "block";
@@ -75,7 +75,7 @@ Modal.prototype.generateModal = function generateModal() {
     if (this.modalElement) {
         return;
     }
-    var msg = this.msgQueue.shift();
+    const msg = this.msgQueue.shift();
     if (msg === undefined) {
         return;
     }
@@ -85,9 +85,9 @@ Modal.prototype.generateModal = function generateModal() {
 
 // Set up an event to process closing the modal
 Modal.prototype.registerModalClose = function registerModalClose() {
-    var self = this;
-    var originalCallbacks = {};
-    var timeoutTimer = undefined;
+    const self = this;
+    const originalCallbacks = {};
+    let timeoutTimer = undefined;
     function isOnclick(onClickEvent) {
         return onClickEvent.target == self.modalElement;
     }
@@ -96,13 +96,13 @@ Modal.prototype.registerModalClose = function registerModalClose() {
     }
     function generateEvent(onClickCorrect, windowEvent) {
         originalCallbacks[windowEvent] = window[windowEvent];
-        var callback = function eventCallback(eventObject) {
+        const callback = function eventCallback(eventObject) {
             if (!onClickCorrect(eventObject)) {
                 return;
             }
             self.deleteModal();
             Object.keys(originalCallbacks).forEach(function (key) {
-                var originalCallback = originalCallbacks[key];
+                const originalCallback = originalCallbacks[key];
                 window[key] = originalCallback;
             });
             clearTimeout(timeoutTimer);
@@ -117,23 +117,23 @@ Modal.prototype.registerModalClose = function registerModalClose() {
     generateEvent(isOnKeyUp, "onkeyup");
     // When the modal times out, close it
     timeoutTimer = setTimeout(function callback(){
-        var keyUpEvent = new KeyboardEvent("keyup", {code: escapeCode});
+        const keyUpEvent = new KeyboardEvent("keyup", {code: escapeCode});
         window.onkeyup(keyUpEvent);
     }, modalTimeout);
 };
 
 // Start flashing tab at intervals
 Modal.prototype.notify = function notify() {
-    var notified = false;
+    let notified = false;
     this.notification = setInterval(function flashOn() {
-        var playAudio = (audioNotificationFrequency == "once" && !notified)
+        const playAudio = (audioNotificationFrequency == "once" && !notified)
             || audioNotificationFrequency == "repeating";
         if (audioNotificationFile && playAudio) {
-            var audio = new Audio(audioNotificationFile);
+            const audio = new Audio(audioNotificationFile);
             audio.play();
         }
         notified = true;
-        var originalTitle = document.title;
+        const originalTitle = document.title;
         document.title = originalTitle + " - Alert";
         setTimeout(function flashOff() {
             document.title = originalTitle;
