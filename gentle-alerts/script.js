@@ -147,6 +147,14 @@ Modal.prototype.stopFlashTab = function stopFlashTab() {
 };
 
 function gentleAlert(msg) {
+  const cssPath = getConfig("cssPath", "");
+  if (cssPath) {
+    const c = document.createElement("link");
+    c.rel = "stylesheet";
+    c.href = cssPath;
+    (document.head||document.documentElement).appendChild(c);
+  }
+
   audioNotificationFrequency = getConfig("audioNotificationFrequency", audioNotificationFrequency);
   modalTimeout = getConfig("modalTimeout", modalTimeout);
   if (modal === undefined) {

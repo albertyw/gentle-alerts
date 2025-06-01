@@ -4,11 +4,8 @@ s.src = chrome.runtime.getURL("gentle-alerts.min.js");
 s.dataset.audioNotificationFile = chrome.runtime.getURL("notification.ogg");
 (document.head||document.documentElement).appendChild(s);
 
-// Install CSS
-const c = document.createElement("link");
-c.rel = "stylesheet";
-c.href = chrome.runtime.getURL("gentle-alerts.css");
-(document.head||document.documentElement).appendChild(c);
+// Set up CSS
+s.dataset["cssPath"] = chrome.runtime.getURL("gentle-alerts.css");
 
 // Read configs
 chrome.storage.sync.get({
