@@ -23,11 +23,11 @@ const spaceCode = "Space";
 const closeModalCodes = [enterCode, escapeCode, spaceCode];
 
 function chainAccessor(data, properties) {
-    let value = data;
-    for(let x=0; x<properties.length; x++) {
-        value = value && value[properties[x]];
-    }
-    return value;
+  let value = data;
+  for(let x=0; x<properties.length; x++) {
+    value = value && value[properties[x]];
+  }
+  return value;
 }
 
 // Frequency at which the audio notification sounds
@@ -37,124 +37,124 @@ let audioNotificationFrequency = "once";
 const audioNotificationFile = chainAccessor(currentScript, "dataset", "audioNotificationFile");
 
 export function Modal(){
-    this.msgQueue = [];
-    this.modalElement = undefined;
+  this.msgQueue = [];
+  this.modalElement = undefined;
 }
 
 // Add messages to the Modal queue
 Modal.prototype.queueMsg = function queueMsg(msg) {
-    this.msgQueue.push(msg);
-    this.generateModal();
+  this.msgQueue.push(msg);
+  this.generateModal();
 };
 
 // Create a modal from modalHTML and append to the bottom of the document
 Modal.prototype.createModal = function createModal(msg) {
-    const span = document.createElement("span");
-    span.id = "gentle-alerts-modal";
-    span.innerHTML = modalHTML;
-    document.documentElement.appendChild(span);
-    const modalContent = document.getElementById("gentle-alerts-modal-content-text");
-    modalContent.textContent = msg;
-    this.modalElement = document.getElementById("gentle-alerts-modal");
-    this.modalElement.style.display = "block";
-    this.notify();
+  const span = document.createElement("span");
+  span.id = "gentle-alerts-modal";
+  span.innerHTML = modalHTML;
+  document.documentElement.appendChild(span);
+  const modalContent = document.getElementById("gentle-alerts-modal-content-text");
+  modalContent.textContent = msg;
+  this.modalElement = document.getElementById("gentle-alerts-modal");
+  this.modalElement.style.display = "block";
+  this.notify();
 };
 
 // Find and delete the modal
 Modal.prototype.deleteModal = function deleteModal() {
-    if (this.modalElement === undefined) {
-        return;
-    }
-    this.modalElement.parentNode.removeChild(this.modalElement);
-    this.modalElement = undefined;
-    this.stopFlashTab();
+  if (this.modalElement === undefined) {
+    return;
+  }
+  this.modalElement.parentNode.removeChild(this.modalElement);
+  this.modalElement = undefined;
+  this.stopFlashTab();
 };
 
 // Create, set the modal content, and show it
 Modal.prototype.generateModal = function generateModal() {
-    if (this.modalElement) {
-        return;
-    }
-    const msg = this.msgQueue.shift();
-    if (msg === undefined) {
-        return;
-    }
-    this.createModal(msg);
-    this.registerModalClose();
+  if (this.modalElement) {
+    return;
+  }
+  const msg = this.msgQueue.shift();
+  if (msg === undefined) {
+    return;
+  }
+  this.createModal(msg);
+  this.registerModalClose();
 };
 
 // Set up an event to process closing the modal
 Modal.prototype.registerModalClose = function registerModalClose() {
-    const self = this;
-    const originalCallbacks = {};
-    let timeoutTimer = undefined;
-    function isOnclick(onClickEvent) {
-        return onClickEvent.target == self.modalElement;
-    }
-    function isOnKeyUp(onKeyUpEvent) {
-        return closeModalCodes.indexOf(onKeyUpEvent.code) >= 0;
-    }
-    function generateEvent(onClickCorrect, windowEvent) {
-        originalCallbacks[windowEvent] = window[windowEvent];
-        const callback = function eventCallback(eventObject) {
-            if (!onClickCorrect(eventObject)) {
-                return;
-            }
-            self.deleteModal();
-            Object.keys(originalCallbacks).forEach(function (key) {
-                const originalCallback = originalCallbacks[key];
-                window[key] = originalCallback;
-            });
-            clearTimeout(timeoutTimer);
-            self.generateModal();
-            eventObject.preventDefault();
-            return false;
-        };
-        window[windowEvent] = callback;
-    }
-    // When the user clicks anywhere outside of the modal, close it
-    generateEvent(isOnclick, "onclick");
-    generateEvent(isOnKeyUp, "onkeyup");
-    // When the modal times out, close it
-    timeoutTimer = setTimeout(function callback(){
-        const keyUpEvent = new KeyboardEvent("keyup", {code: escapeCode});
-        window.onkeyup(keyUpEvent);
-    }, modalTimeout);
+  const self = this;
+  const originalCallbacks = {};
+  let timeoutTimer = undefined;
+  function isOnclick(onClickEvent) {
+    return onClickEvent.target == self.modalElement;
+  }
+  function isOnKeyUp(onKeyUpEvent) {
+    return closeModalCodes.indexOf(onKeyUpEvent.code) >= 0;
+  }
+  function generateEvent(onClickCorrect, windowEvent) {
+    originalCallbacks[windowEvent] = window[windowEvent];
+    const callback = function eventCallback(eventObject) {
+      if (!onClickCorrect(eventObject)) {
+        return;
+      }
+      self.deleteModal();
+      Object.keys(originalCallbacks).forEach(function (key) {
+        const originalCallback = originalCallbacks[key];
+        window[key] = originalCallback;
+      });
+      clearTimeout(timeoutTimer);
+      self.generateModal();
+      eventObject.preventDefault();
+      return false;
+    };
+    window[windowEvent] = callback;
+  }
+  // When the user clicks anywhere outside of the modal, close it
+  generateEvent(isOnclick, "onclick");
+  generateEvent(isOnKeyUp, "onkeyup");
+  // When the modal times out, close it
+  timeoutTimer = setTimeout(function callback(){
+    const keyUpEvent = new KeyboardEvent("keyup", {code: escapeCode});
+    window.onkeyup(keyUpEvent);
+  }, modalTimeout);
 };
 
 // Start flashing tab at intervals
 Modal.prototype.notify = function notify() {
-    let notified = false;
-    this.notification = setInterval(function flashOn() {
-        const playAudio = (audioNotificationFrequency == "once" && !notified)
-            || audioNotificationFrequency == "repeating";
-        if (audioNotificationFile && playAudio) {
-            const audio = new Audio(audioNotificationFile);
-            audio.play();
-        }
-        notified = true;
-        const originalTitle = document.title;
-        document.title = originalTitle + " - Alert";
-        setTimeout(function flashOff() {
-            document.title = originalTitle;
-        }, flashInterval);
-    }, flashInterval * flashWaitMultiple);
+  let notified = false;
+  this.notification = setInterval(function flashOn() {
+    const playAudio = (audioNotificationFrequency == "once" && !notified)
+      || audioNotificationFrequency == "repeating";
+    if (audioNotificationFile && playAudio) {
+      const audio = new Audio(audioNotificationFile);
+      audio.play();
+    }
+    notified = true;
+    const originalTitle = document.title;
+    document.title = originalTitle + " - Alert";
+    setTimeout(function flashOff() {
+      document.title = originalTitle;
+    }, flashInterval);
+  }, flashInterval * flashWaitMultiple);
 };
 
 // Stop flashing tab
 Modal.prototype.stopFlashTab = function stopFlashTab() {
-    clearInterval(this.notification);
+  clearInterval(this.notification);
 };
 
 function gentleAlert(msg) {
-    audioNotificationFrequency = chainAccessor(currentScript, "dataset", "audioNotificationFrequency");
-    modalTimeout = chainAccessor(currentScript, "dataset", "modalTimeout") || modalTimeout;
-    if (modal === undefined) {
-        modal = new Modal();
-    }
-    modal.queueMsg(msg);
+  audioNotificationFrequency = chainAccessor(currentScript, "dataset", "audioNotificationFrequency");
+  modalTimeout = chainAccessor(currentScript, "dataset", "modalTimeout") || modalTimeout;
+  if (modal === undefined) {
+    modal = new Modal();
+  }
+  modal.queueMsg(msg);
 }
 
 if (typeof window !== "undefined" && window.alert != "undefined") {
-    window.alert = gentleAlert;
+  window.alert = gentleAlert;
 }
