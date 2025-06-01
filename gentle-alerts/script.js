@@ -22,19 +22,19 @@ const escapeCode = "Escape";
 const spaceCode = "Space";
 const closeModalCodes = [enterCode, escapeCode, spaceCode];
 
-function chainAccessor(data, properties) {
-  let value = data;
-  for(let x=0; x<properties.length; x++) {
-    value = value && value[properties[x]];
+// getConfig function to read data attributes from the script tag
+function getConfig(property, defaultValue) {
+  if (currentScript && currentScript.dataset && currentScript.dataset[property]) {
+    return currentScript.dataset[property];
   }
-  return value;
+  return defaultValue;
 }
 
 // Frequency at which the audio notification sounds
 // Values can be "none", "once", or "repeating"
 let audioNotificationFrequency = "once";
 // Location of audio file to be played during audio notification
-const audioNotificationFile = chainAccessor(currentScript, "dataset", "audioNotificationFile");
+const audioNotificationFile = getConfig("audioNotificationFile", undefined);
 
 export function Modal(){
   this.msgQueue = [];
@@ -147,8 +147,8 @@ Modal.prototype.stopFlashTab = function stopFlashTab() {
 };
 
 function gentleAlert(msg) {
-  audioNotificationFrequency = chainAccessor(currentScript, "dataset", "audioNotificationFrequency");
-  modalTimeout = chainAccessor(currentScript, "dataset", "modalTimeout") || modalTimeout;
+  audioNotificationFrequency = getConfig("audioNotificationFrequency", audioNotificationFrequency);
+  modalTimeout = getConfig("modalTimeout", modalTimeout);
   if (modal === undefined) {
     modal = new Modal();
   }
