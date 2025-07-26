@@ -11,8 +11,8 @@ Google chrome extension to convert alerts into gentle notifications
 [![npm](https://img.shields.io/npm/v/gentle-alerts.svg)](https://www.npmjs.com/package/gentle-alerts)
 
 [![Build Status](https://drone.albertyw.com/api/badges/albertyw/gentle-alerts/status.svg)](https://drone.albertyw.com/albertyw/gentle-alerts)
-[![Test Coverage](https://codeclimate.com/github/albertyw/gentle-alerts/badges/coverage.svg)](https://codeclimate.com/github/albertyw/gentle-alerts/coverage)
-[![Code Climate](https://codeclimate.com/github/albertyw/gentle-alerts/badges/gpa.svg)](https://codeclimate.com/github/albertyw/gentle-alerts)
+[![Maintainability](https://qlty.sh/gh/albertyw/projects/gentle-alerts/maintainability.svg)](https://qlty.sh/gh/albertyw/projects/gentle-alerts)
+[![Code Coverage](https://qlty.sh/gh/albertyw/projects/gentle-alerts/coverage.svg)](https://qlty.sh/gh/albertyw/projects/gentle-alerts)
 [![install size](https://packagephobia.com/badge?p=gentle-alerts)](https://packagephobia.com/result?p=gentle-alerts)
 
 I started this project after getting annoyed with Google Calendar's event
