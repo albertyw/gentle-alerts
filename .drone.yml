@@ -4,7 +4,7 @@ name: test
 
 steps:
   - name: Test Node
-    image: satantime/puppeteer-node:24-trixie-slim
+    image: satantime/puppeteer-node:25-trixie-slim
     commands:
       - apt-get update && apt-get install -y curl xz-utils zip
       - curl https://qlty.sh | sh
@@ -19,7 +19,7 @@ steps:
     environment:
       NPM_TOKEN:
         from_secret: npm_token
-    image: node:24
+    image: node:25
     commands:
       - echo "//registry.npmjs.org/:_authToken=$${NPM_TOKEN}" > ~/.npmrc
       - npm whoami
