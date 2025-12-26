@@ -4,9 +4,9 @@
   "description": "Convert alerts into gentle notifications",
   "type": "module",
   "scripts": {
-    "test": "npm run build && npm run eslint && npm run wdio",
+    "test": "pnpm run build && pnpm run eslint && pnpm run wdio",
     "eslint": "eslint -c .eslint.config.js gentle-alerts test",
-    "package": "npm run clean && npm run build && zip -r gentle-alerts.zip gentle-alerts",
+    "package": "pnpm run clean && pnpm run build && zip -r gentle-alerts.zip gentle-alerts",
     "clean": "rm -f gentle-alerts/gentle-alerts.min.js && rm -f gentle-alerts.zip && find | grep DS | xargs rm -f",
     "build": "webpack && cp dist/main.js gentle-alerts/gentle-alerts.min.js && rm -r dist",
     "wdio": "wdio run ./wdio.conf.js"
