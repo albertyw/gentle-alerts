@@ -1,0 +1,12 @@
+publicHoistPattern:
+- "@wdio/globals"
+- "aria-query"
+- "css-shorthand-properties"
+- "css-value"
+- "expect"
+- "expect-webdriverio"
+- "grapheme-splitter"
+- "lodash.clonedeep"
+- "lodash.zip"
+- "rgb2hex"
+- "webdriverio"

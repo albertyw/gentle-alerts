@@ -39,7 +39,7 @@ Testing
 -------
 
 ```
-npm test
+pnpm test
 ```
 
 Releasing a new version
@@ -50,7 +50,7 @@ Releasing a new version
 3. Update package.json with new version
 4. Commit a new release
 5. Tag and push the commit
-6. `npm run package`
+6. `pnpm run package`
 7. Upload the zip file to the [chrome web store](https://chrome.google.com/webstore/developer/dashboard)
 
 Design

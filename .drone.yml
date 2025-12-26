@@ -8,9 +8,11 @@ steps:
     commands:
       - apt-get update && apt-get install -y curl xz-utils zip
       - curl https://qlty.sh | sh
-      - npm ci
-      - npm run package
-      - npm test
+      - curl -fsSL https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" SHELL="$(which bash)" bash -
+      - export PNPM_HOME="$HOME/.local/share/pnpm" && export PATH="$PNPM_HOME:$PATH"
+      - pnpm install
+      - pnpm run package
+      - pnpm test
       - ~/.qlty/bin/qlty coverage publish .coverage/clover.xml --override-commit-sha "$DRONE_COMMIT_SHA" --override-branch "$DRONE_BRANCH" --override-build-id "$DRONE_BUILD_NUMBER"
     environment:
       QLTY_COVERAGE_TOKEN: qltcp_qH9pUuLeBSudET4U
@@ -21,9 +23,11 @@ steps:
         from_secret: npm_token
     image: node:25
     commands:
+      - curl -fsSL https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" SHELL="$(which bash)" bash -
+      - export PNPM_HOME="$HOME/.local/share/pnpm" && export PATH="$PNPM_HOME:$PATH"
       - echo "//registry.npmjs.org/:_authToken=$${NPM_TOKEN}" > ~/.npmrc
-      - npm whoami
-      - npm publish
+      - pnpm whoami
+      - pnpm publish
     depends_on:
       - Test Node
     when:
