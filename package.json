@@ -30,7 +30,7 @@
     "chai": "^6.2.2",
     "css-minimizer-webpack-plugin": "^7.0.4",
     "eslint": "^9.39.2",
-    "globals": "^16.5.0",
+    "globals": "^17.0.0",
     "jquery": "^3.7.1",
     "sinon": "^21.0.1",
     "webpack": "^5.104.1",
