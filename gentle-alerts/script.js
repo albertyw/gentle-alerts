@@ -130,7 +130,7 @@ Modal.prototype.notify = function notify() {
       || audioNotificationFrequency == "repeating";
     if (audioNotificationFile && playAudio) {
       const audio = new Audio(audioNotificationFile);
-      audio.play();
+      audio.play().catch(() => {});
     }
     notified = true;
     const originalTitle = document.title;
