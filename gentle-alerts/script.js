@@ -30,6 +30,9 @@ function getConfig(property, defaultValue) {
   return defaultValue;
 }
 
+// Track whether the CSS has already been injected
+let cssInjected = false;
+
 // Frequency at which the audio notification sounds
 // Values can be "none", "once", or "repeating"
 let audioNotificationFrequency = "once";
@@ -148,11 +151,12 @@ Modal.prototype.stopFlashTab = function stopFlashTab() {
 
 function gentleAlert(msg) {
   const cssPath = getConfig("cssPath", "");
-  if (cssPath) {
+  if (cssPath && !cssInjected) {
     const c = document.createElement("link");
     c.rel = "stylesheet";
     c.href = cssPath;
     (document.head||document.documentElement).appendChild(c);
+    cssInjected = true;
   }
 
   audioNotificationFrequency = getConfig("audioNotificationFrequency", audioNotificationFrequency);
