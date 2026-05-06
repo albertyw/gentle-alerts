@@ -30,6 +30,7 @@ function restore_options() {
     document.getElementById("modalTimeoutMinutes").value = modalTimeoutMinutes;
   });
 }
-document.addEventListener("DOMContentLoaded", restore_options);
-document.getElementById("save").addEventListener("click",
-  save_options);
+document.addEventListener("DOMContentLoaded", function() {
+  restore_options();
+  document.getElementById("save").addEventListener("click", save_options);
+});
