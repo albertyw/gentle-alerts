@@ -30,6 +30,9 @@ function getConfig(property, defaultValue) {
   return defaultValue;
 }
 
+// Track whether the CSS has already been injected
+let cssInjected = false;
+
 // Frequency at which the audio notification sounds
 // Values can be "none", "once", or "repeating"
 let audioNotificationFrequency = "once";
@@ -89,7 +92,7 @@ Modal.prototype.registerModalClose = function registerModalClose() {
   const originalCallbacks = {};
   let timeoutTimer = undefined;
   function isOnclick(onClickEvent) {
-    return onClickEvent.target == self.modalElement;
+    return onClickEvent.target === self.modalElement;
   }
   function isOnKeyUp(onKeyUpEvent) {
     return closeModalCodes.indexOf(onKeyUpEvent.code) >= 0;
@@ -126,11 +129,11 @@ Modal.prototype.registerModalClose = function registerModalClose() {
 Modal.prototype.notify = function notify() {
   let notified = false;
   this.notification = setInterval(function flashOn() {
-    const playAudio = (audioNotificationFrequency == "once" && !notified)
-      || audioNotificationFrequency == "repeating";
+    const playAudio = (audioNotificationFrequency === "once" && !notified)
+      || audioNotificationFrequency === "repeating";
     if (audioNotificationFile && playAudio) {
       const audio = new Audio(audioNotificationFile);
-      audio.play();
+      audio.play().catch(() => {});
     }
     notified = true;
     const originalTitle = document.title;
@@ -148,11 +151,12 @@ Modal.prototype.stopFlashTab = function stopFlashTab() {
 
 function gentleAlert(msg) {
   const cssPath = getConfig("cssPath", "");
-  if (cssPath) {
+  if (cssPath && !cssInjected) {
     const c = document.createElement("link");
     c.rel = "stylesheet";
     c.href = cssPath;
     (document.head||document.documentElement).appendChild(c);
+    cssInjected = true;
   }
 
   audioNotificationFrequency = getConfig("audioNotificationFrequency", audioNotificationFrequency);
@@ -163,6 +167,6 @@ function gentleAlert(msg) {
   modal.queueMsg(msg);
 }
 
-if (typeof window !== "undefined" && window.alert != "undefined") {
+if (typeof window !== "undefined" && typeof window.alert !== "undefined") {
   window.alert = gentleAlert;
 }
