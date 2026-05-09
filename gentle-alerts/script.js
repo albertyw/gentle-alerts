@@ -92,7 +92,7 @@ Modal.prototype.registerModalClose = function registerModalClose() {
   const originalCallbacks = {};
   let timeoutTimer = undefined;
   function isOnclick(onClickEvent) {
-    return onClickEvent.target == self.modalElement;
+    return onClickEvent.target === self.modalElement;
   }
   function isOnKeyUp(onKeyUpEvent) {
     return closeModalCodes.indexOf(onKeyUpEvent.code) >= 0;
@@ -129,8 +129,8 @@ Modal.prototype.registerModalClose = function registerModalClose() {
 Modal.prototype.notify = function notify() {
   let notified = false;
   this.notification = setInterval(function flashOn() {
-    const playAudio = (audioNotificationFrequency == "once" && !notified)
-      || audioNotificationFrequency == "repeating";
+    const playAudio = (audioNotificationFrequency === "once" && !notified)
+      || audioNotificationFrequency === "repeating";
     if (audioNotificationFile && playAudio) {
       const audio = new Audio(audioNotificationFile);
       audio.play().catch(() => {});
