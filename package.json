@@ -23,18 +23,18 @@
   "homepage": "https://github.com/albertyw/gentle-alerts#readme",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@wdio/browser-runner": "^9.27.0",
-    "@wdio/cli": "^9.27.0",
-    "@wdio/mocha-framework": "^9.27.0",
-    "@wdio/spec-reporter": "^9.27.0",
+    "@wdio/browser-runner": "^9.27.1",
+    "@wdio/cli": "^9.27.1",
+    "@wdio/mocha-framework": "^9.27.1",
+    "@wdio/spec-reporter": "^9.27.1",
     "chai": "^6.2.2",
     "css-minimizer-webpack-plugin": "^8.0.0",
-    "eslint": "^10.2.1",
-    "globals": "^17.5.0",
+    "eslint": "^10.3.0",
+    "globals": "^17.6.0",
     "jquery": "^4.0.0",
     "sinon": "^21.1.2",
     "webpack": "^5.106.2",
-    "webpack-cli": "^7.0.0"
+    "webpack-cli": "^7.0.2"
   },
   "engines": {
     "node": ">=18"
