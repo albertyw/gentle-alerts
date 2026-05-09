@@ -1,6 +1,17 @@
 Change Log
 ==========
 
+v1.3.5 (2026-05-09)
+-------------------
+
+ - Various cleanup and bugfixes
+ - Browser compatibility improvements
+ - Update dependencies
+ - Switch npm publishing to use OIDC
+ - Switch from npm to pnpm
+ - Switch from codeclimate to qlty
+
+
 v1.3.4 (2025-05-31)
 -------------------
 
