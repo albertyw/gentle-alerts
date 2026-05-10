@@ -2,10 +2,9 @@
   <img src="gentle-alerts/img/logo128x128.png">
 </p>
 
-Gentle Alerts
-=============
+# Gentle Alerts
 
-Google chrome extension to convert alerts into gentle notifications
+Google Chrome extension to convert alerts into gentle notifications.
 
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/bcjaadnpjolbaginfighnpcdjmbeiahn.svg)](https://chrome.google.com/webstore/detail/gentle-alerts/bcjaadnpjolbaginfighnpcdjmbeiahn)
 [![npm](https://img.shields.io/npm/v/gentle-alerts.svg)](https://www.npmjs.com/package/gentle-alerts)
@@ -17,45 +16,39 @@ Google chrome extension to convert alerts into gentle notifications
 
 I started this project after getting annoyed with Google Calendar's event
 notifications.  They used to have nice soft notifications, but they broke it
-when they graduated their feature from google labs and they
-[haven't fixed it](https://productforums.google.com/forum/#!topic/calendar/aWfZBNKlNEQ).
+when they graduated the feature from Google Labs.
 
-The extension will replace the built-in browser alert window with a modal which
+The extension replaces the built-in browser alert window with a modal that
 won't force you to context switch between tabs.  It also prevents you from
-accidentally closing alert windows when you're typing.
+accidentally dismissing alerts while typing.
 
-You can close the modal by pressing "Enter", "Escape", or "Space".  When
-opening, it has an [audio chime](https://notificationsounds.com/message-tones/just-like-that-404).
+Close the modal by pressing `Enter`, `Escape`, or `Space`.  Opening it plays
+an [audio chime](https://notificationsounds.com/message-tones/just-like-that-404).
 
-**Contributions welcome**
+**Contributions welcome.**
 
-Development
------------
+## Development
 
-Gentle-Alerts does not depend on any third-party libraries (e.g. jQuery) and is
-written against ES 2015 spec for browser compatibility.
+Gentle Alerts has no runtime dependencies and targets ES2015 for browser
+compatibility.
 
-Testing
--------
+## Testing
 
 ```
 pnpm test
 ```
 
-Releasing a new version
------------------------
+## Releasing a New Version
 
-1. Update Changelog
-2. Update gentle-alerts/manifest.json with new version
-3. Update package.json with new version
-4. Commit a new release
-5. Tag and push the commit
-6. `pnpm run package`
-7. Upload the zip file to the [chrome web store](https://chrome.google.com/webstore/developer/dashboard)
+1. Update `CHANGELOG.md`
+2. Bump the version in `gentle-alerts/manifest.json` and `package.json`
+3. Commit and tag the release
+4. Run `pnpm run package` to build `gentle-alerts.zip`
+5. Upload the zip to the [Chrome Web Store](https://chrome.google.com/webstore/developer/dashboard)
 
-Design
-------
+## Design
 
-The logo is from [logodust](http://www.logodust.com/).  The background color is `rgb(132, 192, 215)`:
+The logo is from [logodust](http://www.logodust.com/).  The background color
+is `#84c0d7` (`rgb(132, 192, 215)`):
 
-![84c0d7](https://via.placeholder.com/150/84c0d7?text=84c0d7)
+![#84c0d7](https://img.shields.io/badge/%20%20%20%2384c0d7%20%20%20-%2384c0d7?style=for-the-badge)
