@@ -27,6 +27,8 @@ an [audio chime](https://notificationsounds.com/message-tones/just-like-that-404
 
 **Contributions welcome.**
 
+See [PRIVACY.md](PRIVACY.md) for the privacy policy.
+
 ## Development
 
 Gentle Alerts has no runtime dependencies and targets ES2015 for browser
