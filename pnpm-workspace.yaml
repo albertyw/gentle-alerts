@@ -1,3 +1,8 @@
+allowBuilds:
+  "@swc/core": false
+  edgedriver: false
+  esbuild: false
+  geckodriver: false
 publicHoistPattern:
 - "@wdio/globals"
 - "aria-query"
