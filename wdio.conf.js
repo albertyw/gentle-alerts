@@ -115,6 +115,17 @@ export const config = {
   // Default request retries count
   connectionRetryCount: 3,
   //
+  // Strip the `Content-Length` and `Connection` headers that the webdriver
+  // package sets manually. Node 26 bundles undici v8, which enforces the Fetch
+  // spec and rejects these forbidden request headers with UND_ERR_INVALID_ARG,
+  // breaking session creation. See https://github.com/webdriverio/webdriverio/issues/15265
+  transformRequest: (requestOptions: RequestInit): RequestInit => {
+    const headers = requestOptions.headers as Headers | undefined;
+    headers?.delete('content-length');
+    headers?.delete('connection');
+    return requestOptions;
+  },
+  //
   // Test runner services
   // Services take over a specific job you don't want to take care of. They enhance
   // your test setup with almost no effort. Unlike plugins, they don't add new
