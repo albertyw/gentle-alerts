@@ -119,8 +119,8 @@ export const config = {
   // package sets manually. Node 26 bundles undici v8, which enforces the Fetch
   // spec and rejects these forbidden request headers with UND_ERR_INVALID_ARG,
   // breaking session creation. See https://github.com/webdriverio/webdriverio/issues/15265
-  transformRequest: (requestOptions: RequestInit): RequestInit => {
-    const headers = requestOptions.headers as Headers | undefined;
+  transformRequest: (requestOptions) => {
+    const headers = requestOptions.headers;
     headers?.delete('content-length');
     headers?.delete('connection');
     return requestOptions;
