@@ -14,7 +14,15 @@ export const flashInterval = 1250;
 const flashWaitMultiple = 6;
 
 // Time to wait until notification disappears
+// A value of 0 disables auto-closing, as documented in options.htm
 export let modalTimeout = 30 * 60 * 1000;
+
+// Set the time to wait until the notification disappears.  Exported because ES
+// module bindings are read-only for importers, so callers outside this module
+// need a setter rather than assigning to the binding directly.
+export function setModalTimeout(value) {
+  modalTimeout = value;
+}
 
 // Keys to close modals
 const enterCode = "Enter";
@@ -118,11 +126,16 @@ Modal.prototype.registerModalClose = function registerModalClose() {
   // When the user clicks anywhere outside of the modal, close it
   generateEvent(isOnclick, "onclick");
   generateEvent(isOnKeyUp, "onkeyup");
-  // When the modal times out, close it
-  timeoutTimer = setTimeout(function callback(){
-    const keyUpEvent = new KeyboardEvent("keyup", {code: escapeCode});
-    window.onkeyup(keyUpEvent);
-  }, modalTimeout);
+  // When the modal times out, close it.  The timeout arrives as a string when it
+  // comes from the script tag's dataset, so compare numerically; a timeout of 0
+  // means "never auto-close" rather than setTimeout's "fire on the next tick".
+  const timeout = Number(modalTimeout);
+  if (timeout > 0) {
+    timeoutTimer = setTimeout(function callback(){
+      const keyUpEvent = new KeyboardEvent("keyup", {code: escapeCode});
+      window.onkeyup(keyUpEvent);
+    }, timeout);
+  }
 };
 
 // Start flashing tab at intervals
@@ -160,7 +173,7 @@ function gentleAlert(msg) {
   }
 
   audioNotificationFrequency = getConfig("audioNotificationFrequency", audioNotificationFrequency);
-  modalTimeout = getConfig("modalTimeout", modalTimeout);
+  setModalTimeout(getConfig("modalTimeout", modalTimeout));
   if (modal === undefined) {
     modal = new Modal();
   }

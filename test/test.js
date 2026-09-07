@@ -100,6 +100,19 @@ describe("alert", function() {
     expect($("#gentle-alerts-modal").length).to.equal(0);
     await closeAndAssertClosed("click");
   });
+  it("will not auto-close the modal when modalTimeout is 0", async () => {
+    const originalTimeout = script.modalTimeout;
+    script.setModalTimeout(0);
+    try {
+      alert("alert text");
+      expect($("#gentle-alerts-modal").length).to.equal(1);
+      this.clock.tick(60 * 60 * 1000);
+      expect($("#gentle-alerts-modal").length).to.equal(1);
+      await closeAndAssertClosed("click");
+    } finally {
+      script.setModalTimeout(originalTimeout);
+    }
+  });
   it("will flash the title", async () => {
     const originalTitle = document.title;
     alert("alert text");
