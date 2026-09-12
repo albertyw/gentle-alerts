@@ -4,10 +4,13 @@ import sinon from "sinon";
 
 import * as script from "../gentle-alerts/script";
 const Modal = script.Modal;
-let modal = undefined; // eslint-disable-line @typescript-eslint/no-unused-vars
+
+// Module-scoped rather than hung off `this`: a module's top-level `this` is not
+// a usable context object, so strict TypeScript rejects reading properties from
+// it.  The fake clock is shared by every test in the "alert" suite.
+let clock: sinon.SinonFakeTimers;
 
 function resetModals() {
-  modal = undefined;
   $("#gentle-alerts-modal").remove();
 }
 
@@ -27,7 +30,7 @@ describe("Modal", function() {
   });
 });
 
-describe("Modal.prototype.deleteModal", function() {
+describe("Modal.deleteModal", function() {
   beforeEach(resetModals);
   it("will not double delete", function() {
     const modal = new Modal();
@@ -37,7 +40,7 @@ describe("Modal.prototype.deleteModal", function() {
   });
 });
 
-describe("Modal.prototype.generateModal", function() {
+describe("Modal.generateModal", function() {
   beforeEach(resetModals);
   it("will not double generate", function() {
     const modal = new Modal();
@@ -51,13 +54,13 @@ describe("Modal.prototype.generateModal", function() {
 
 describe("alert", function() {
   beforeEach(() => {
-    this.clock = sinon.useFakeTimers();
+    clock = sinon.useFakeTimers();
     resetModals();
   });
   afterEach(() => {
-    this.clock.restore();
+    clock.restore();
   });
-  async function closeAndAssertClosed(triggerEvent) {
+  async function closeAndAssertClosed(triggerEvent: string | JQuery.Event) {
     await Promise.resolve($("#gentle-alerts-modal").trigger(triggerEvent));
     expect($("#gentle-alerts-modal-content-text").length).to.equal(0);
     expect($("#gentle-alerts-modal").length).to.equal(0);
@@ -96,7 +99,7 @@ describe("alert", function() {
   });
   it("can hide the modal after a timeout", async () => {
     alert("alert text");
-    this.clock.tick(script.modalTimeout + 10);
+    clock.tick(script.modalTimeout + 10);
     expect($("#gentle-alerts-modal").length).to.equal(0);
     await closeAndAssertClosed("click");
   });
@@ -106,7 +109,7 @@ describe("alert", function() {
     try {
       alert("alert text");
       expect($("#gentle-alerts-modal").length).to.equal(1);
-      this.clock.tick(60 * 60 * 1000);
+      clock.tick(60 * 60 * 1000);
       expect($("#gentle-alerts-modal").length).to.equal(1);
       await closeAndAssertClosed("click");
     } finally {
@@ -117,9 +120,9 @@ describe("alert", function() {
     const originalTitle = document.title;
     alert("alert text");
     expect(document.title).to.equal(originalTitle);
-    this.clock.tick(script.flashInterval * 6.5);
+    clock.tick(script.flashInterval * 6.5);
     expect(document.title).to.not.equal(originalTitle);
-    this.clock.tick(script.flashInterval);
+    clock.tick(script.flashInterval);
     expect(document.title).to.equal(originalTitle);
     await closeAndAssertClosed("click");
   });
