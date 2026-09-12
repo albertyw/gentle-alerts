@@ -119,11 +119,47 @@ describe("alert", function() {
   it("will flash the title", async () => {
     const originalTitle = document.title;
     alert("alert text");
+    expect(document.title).to.not.equal(originalTitle);
+    clock.tick(script.flashInterval);
     expect(document.title).to.equal(originalTitle);
-    clock.tick(script.flashInterval * 6.5);
+    clock.tick(script.flashInterval * 5.5);
     expect(document.title).to.not.equal(originalTitle);
     clock.tick(script.flashInterval);
     expect(document.title).to.equal(originalTitle);
     await closeAndAssertClosed("click");
+  });
+});
+
+describe("audio notification", function() {
+  let playCount: number;
+  let originalAudio: typeof Audio;
+  beforeEach(() => {
+    clock = sinon.useFakeTimers();
+    resetModals();
+    playCount = 0;
+    originalAudio = window.Audio;
+    window.Audio = class {
+      play() {
+        playCount += 1;
+        return Promise.resolve();
+      }
+    } as unknown as typeof Audio;
+    script.setAudioNotificationFile("notification.ogg");
+  });
+  afterEach(() => {
+    window.Audio = originalAudio;
+    script.setAudioNotificationFile(undefined);
+    clock.restore();
+  });
+  it("will play as soon as the alert is intercepted", async () => {
+    alert("alert text");
+    expect(playCount).to.equal(1);
+    await Promise.resolve($("#gentle-alerts-modal").trigger("click"));
+  });
+  it("will play only once while the modal stays open", async () => {
+    alert("alert text");
+    clock.tick(script.flashInterval * 20);
+    expect(playCount).to.equal(1);
+    await Promise.resolve($("#gentle-alerts-modal").trigger("click"));
   });
 });

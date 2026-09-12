@@ -53,12 +53,19 @@ let cssInjected = false;
 type AudioNotificationFrequency = "none" | "once" | "repeating";
 let audioNotificationFrequency: AudioNotificationFrequency = "once";
 // Location of audio file to be played during audio notification
-const audioNotificationFile = getConfig("audioNotificationFile", undefined);
+let audioNotificationFile = getConfig("audioNotificationFile", undefined);
+
+// Set the audio file played during a notification.  Exported for the same
+// reason as setModalTimeout: ES module bindings are read-only for importers.
+export function setAudioNotificationFile(value: string | undefined): void {
+  audioNotificationFile = value;
+}
 
 export class Modal {
   msgQueue: string[] = [];
   modalElement: HTMLElement | undefined = undefined;
   notification: ReturnType<typeof setInterval> | undefined = undefined;
+  originalTitle: string | undefined = undefined;
 
   // Add messages to the Modal queue
   queueMsg(msg: string): void {
@@ -145,10 +152,16 @@ export class Modal {
     }
   }
 
-  // Start flashing tab at intervals
+  // Start flashing the tab and sounding the audio notification.  The first
+  // notification fires immediately rather than on the first setInterval tick:
+  // waiting for the tick delayed it by a whole flash cycle, and browsers
+  // throttle or freeze timers in hidden tabs, which is exactly where an alert
+  // most needs announcing.
   notify(): void {
+    const originalTitle = document.title;
+    this.originalTitle = originalTitle;
     let notified = false;
-    this.notification = setInterval(function flashOn() {
+    const flashOn = () => {
       const playAudio = (audioNotificationFrequency === "once" && !notified)
         || audioNotificationFrequency === "repeating";
       if (audioNotificationFile && playAudio) {
@@ -156,17 +169,26 @@ export class Modal {
         audio.play().catch(() => {});
       }
       notified = true;
-      const originalTitle = document.title;
       document.title = originalTitle + " - Alert";
-      setTimeout(function flashOff() {
-        document.title = originalTitle;
+      setTimeout(() => {
+        // Skip the restore if the modal is already gone: stopFlashTab has
+        // restored the title and the page may have set its own since
+        if (this.originalTitle !== undefined) {
+          document.title = originalTitle;
+        }
       }, flashInterval);
-    }, flashInterval * flashWaitMultiple);
+    };
+    flashOn();
+    this.notification = setInterval(flashOn, flashInterval * flashWaitMultiple);
   }
 
-  // Stop flashing tab
+  // Stop flashing tab and restore the title the page had before flashing
   stopFlashTab(): void {
     clearInterval(this.notification);
+    if (this.originalTitle !== undefined) {
+      document.title = this.originalTitle;
+      this.originalTitle = undefined;
+    }
   }
 }
 
