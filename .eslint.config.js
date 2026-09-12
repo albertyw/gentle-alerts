@@ -1,5 +1,6 @@
 import globals from "globals";
 import js from "@eslint/js";
+import tseslint from "typescript-eslint";
 
 let globalVars = globals.browser;
 globalVars = {...globalVars, ...{
@@ -20,8 +21,9 @@ globalVars = {...globalVars, ...{
   "modal": true,
 }};
 
-export default [
+export default tseslint.config(
   js.configs.recommended,
+  ...tseslint.configs.recommended,
   {
     "rules": {
       "indent": [
@@ -40,6 +42,8 @@ export default [
         "error",
         "always"
       ],
+      // chai assertions such as `expect(x).to.be.undefined` are bare expressions
+      "@typescript-eslint/no-unused-expressions": "off",
     },
     "languageOptions": {
       "ecmaVersion": 2022,
@@ -48,8 +52,12 @@ export default [
     },
   },
   {
+    // Build output: webpack compiles the TypeScript sources into these exact
+    // filenames inside the extension directory
     "ignores": [
       "**/gentle-alerts.min.js",
+      "gentle-alerts/bootstrap.js",
+      "gentle-alerts/options.js",
     ],
   },
-];
+);

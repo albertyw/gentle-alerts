@@ -106,33 +106,32 @@ export class Modal {
 
   // Set up an event to process closing the modal
   registerModalClose(): void {
-    const self = this;
     const originalCallbacks: Partial<WindowEventHandlers> = {};
     let timeoutTimer: ReturnType<typeof setTimeout> | undefined = undefined;
-    function isOnclick(onClickEvent: Event): boolean {
-      return onClickEvent.target === self.modalElement;
-    }
-    function isOnKeyUp(onKeyUpEvent: Event): boolean {
+    const isOnclick = (onClickEvent: Event): boolean => {
+      return onClickEvent.target === this.modalElement;
+    };
+    const isOnKeyUp = (onKeyUpEvent: Event): boolean => {
       return closeModalCodes.indexOf((onKeyUpEvent as KeyboardEvent).code) >= 0;
-    }
-    function generateEvent(onClickCorrect: (event: Event) => boolean, windowEvent: WindowEventName) {
+    };
+    const generateEvent = (onClickCorrect: (event: Event) => boolean, windowEvent: WindowEventName) => {
       const windowHandlers = window as unknown as WindowEventHandlers;
       originalCallbacks[windowEvent] = windowHandlers[windowEvent];
-      const callback = function eventCallback(eventObject: Event) {
+      const callback = (eventObject: Event) => {
         if (!onClickCorrect(eventObject)) {
           return;
         }
-        self.deleteModal();
+        this.deleteModal();
         (Object.keys(originalCallbacks) as WindowEventName[]).forEach(function (key) {
           windowHandlers[key] = originalCallbacks[key];
         });
         clearTimeout(timeoutTimer);
-        self.generateModal();
+        this.generateModal();
         eventObject.preventDefault();
         return false;
       };
       windowHandlers[windowEvent] = callback;
-    }
+    };
     // When the user clicks anywhere outside of the modal, close it
     generateEvent(isOnclick, "onclick");
     generateEvent(isOnKeyUp, "onkeyup");

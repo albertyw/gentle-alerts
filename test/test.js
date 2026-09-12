@@ -4,7 +4,7 @@ import sinon from "sinon";
 
 import * as script from "../gentle-alerts/script";
 const Modal = script.Modal;
-let modal = undefined; // eslint-disable-line no-unused-vars
+let modal = undefined; // eslint-disable-line @typescript-eslint/no-unused-vars
 
 function resetModals() {
   modal = undefined;

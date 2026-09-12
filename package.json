@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "test": "pnpm run build && pnpm run eslint && pnpm run wdio",
-    "eslint": "eslint -c .eslint.config.js gentle-alerts test",
+    "eslint": "tsc --noEmit && eslint -c .eslint.config.js gentle-alerts test",
     "package": "pnpm run clean && pnpm run build && zip -r gentle-alerts.zip gentle-alerts",
-    "clean": "rm -f gentle-alerts/gentle-alerts.min.js && rm -f gentle-alerts.zip && find | grep DS | xargs rm -f",
-    "build": "webpack && cp dist/main.js gentle-alerts/gentle-alerts.min.js && rm -r dist",
+    "clean": "rm -f gentle-alerts/gentle-alerts.min.js gentle-alerts/bootstrap.js gentle-alerts/options.js && rm -f gentle-alerts.zip && find | grep DS | xargs rm -f",
+    "build": "webpack",
     "wdio": "wdio run ./wdio.conf.js"
   },
   "repository": {

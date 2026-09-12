@@ -4,11 +4,19 @@ import path from "path";
 
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 
+// bootstrap and options are loaded directly by the browser -- as a content
+// script and from options.htm -- so they are compiled to their exact filenames
+// alongside the bundle rather than being imported by it.
 const config = {
-  entry: "./gentle-alerts/script.ts",
+  entry: {
+    "gentle-alerts.min": "./gentle-alerts/script.ts",
+    bootstrap: "./gentle-alerts/bootstrap.ts",
+    options: "./gentle-alerts/options.ts",
+  },
   mode: "production",
   output: {
-    path: path.resolve("dist"),
+    path: path.resolve("gentle-alerts"),
+    filename: "[name].js",
   },
   resolve: {
     extensions: [".ts", ".js"],
