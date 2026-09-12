@@ -6,7 +6,7 @@
   "scripts": {
     "test": "pnpm run build && pnpm run eslint && pnpm run wdio",
     "eslint": "tsc --noEmit && eslint -c .eslint.config.ts gentle-alerts test",
-    "package": "pnpm run clean && pnpm run build && zip -r gentle-alerts.zip gentle-alerts",
+    "package": "pnpm run clean && pnpm run build && zip -r gentle-alerts.zip gentle-alerts -x '*.ts'",
     "clean": "rm -f gentle-alerts/gentle-alerts.min.js gentle-alerts/bootstrap.js gentle-alerts/options.js && rm -f gentle-alerts.zip && find | grep DS | xargs rm -f",
     "build": "webpack",
     "wdio": "wdio run ./wdio.conf.ts"
