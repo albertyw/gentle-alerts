@@ -2,7 +2,7 @@ import $ from "jquery";
 import { expect } from "chai";
 import sinon from "sinon";
 
-import { configEventName } from "../gentle-alerts/config";
+import { configEventName, defaultOptions } from "../gentle-alerts/config";
 import * as script from "../gentle-alerts/script";
 const Modal = script.Modal;
 
@@ -20,6 +20,21 @@ let clock: sinon.SinonFakeTimers;
 function resetModals() {
   $("#gentle-alerts-modal").remove();
 }
+
+// Runs first on purpose: script.ts is injected at document_start and overrides
+// window.alert immediately, so an alert can fire before bootstrap.ts has read
+// chrome.storage and sent any config.  This suite is the only point in the file
+// where no config event has been delivered yet.
+describe("alerts fired before any config arrives", function() {
+  beforeEach(resetModals);
+  it("uses the default options", async function() {
+    expect(script.modalTimeout).to.equal(defaultOptions.modalTimeout);
+    alert("alert text");
+    expect($("#gentle-alerts-modal-content-text").text()).to.equal("alert text");
+    expect(script.modalTimeout).to.equal(defaultOptions.modalTimeout);
+    await Promise.resolve($("#gentle-alerts-modal").trigger("click"));
+  });
+});
 
 describe("modalHTML", function() {
   beforeEach(resetModals);
