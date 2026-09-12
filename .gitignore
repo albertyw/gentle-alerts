@@ -65,4 +65,8 @@ gentle-alerts.zip
 # Test files
 dist
 instrumented
-gentle-alerts.min.js
+
+# Build output compiled from TypeScript into the extension directory
+gentle-alerts/gentle-alerts.min.js
+gentle-alerts/bootstrap.js
+gentle-alerts/options.js

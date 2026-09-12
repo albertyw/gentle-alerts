@@ -78,29 +78,32 @@ requests, and pull requests are welcome.
 ## Development
 
 Gentle Alerts has no runtime dependencies — no jQuery, no React, no
-framework.  The extension is a small set of vanilla JavaScript, CSS, and
+framework.  The extension is a small set of vanilla TypeScript, CSS, and
 HTML files bundled with webpack.  Source is written as ES modules and
-linted against `ecmaVersion: 2022`; webpack does not transpile, so the
-shipped code runs directly on whatever ECMAScript version the host Chrome
-supports (Manifest V3 already requires a recent Chrome, so modern syntax
-is safe).
+compiled with `strict` type checking; webpack targets ES2022 and does not
+down-level, so the shipped code runs directly on whatever ECMAScript
+version the host browser supports (Manifest V3 already requires a recent
+browser, so modern syntax is safe).
 
 ### Layout
 
 - `gentle-alerts/` — the extension itself (the directory that gets zipped
   and uploaded to the Chrome Web Store).
   - `manifest.json` — Manifest V3 declaration.
-  - `bootstrap.js` — content script registered for `<all_urls>`; injects
+  - `bootstrap.ts` — content script registered for `<all_urls>`; injects
     `gentle-alerts.min.js` into the page.
-  - `script.js` — main source; intercepts `alert`/`confirm`/`prompt` and
+  - `script.ts` — main source; intercepts `alert`/`confirm`/`prompt` and
     renders the modal.
   - `gentle-alerts.css` — modal styling.
   - `notification.ogg` — chime played when a modal opens.
-  - `options.htm` / `options.js` — preferences page.
+  - `options.htm` / `options.ts` — preferences page.
 - `test/` — WebdriverIO browser tests run with Mocha + Chai + Sinon.
-- `webpack.config.js` — bundles `script.js` to
-  `gentle-alerts/gentle-alerts.min.js`.
-- `.eslint.config.js` — flat ESLint config.
+- `webpack.config.ts` — compiles `script.ts`, `bootstrap.ts`, and
+  `options.ts` into `gentle-alerts/`.  `bootstrap.js` and `options.js` are
+  loaded directly by the browser, so they are emitted under those exact
+  names rather than bundled into `gentle-alerts.min.js`.
+- `tsconfig.json` — strict TypeScript configuration.
+- `.eslint.config.ts` — flat ESLint config, with `typescript-eslint`.
 
 ### Setup
 
@@ -114,8 +117,8 @@ Node >=18 is required (see `engines` in `package.json`).
 
 | Command             | What it does                                        |
 | ------------------- | --------------------------------------------------- |
-| `pnpm run build`    | Bundle `script.js` to `gentle-alerts.min.js`        |
-| `pnpm run eslint`   | Lint the extension and tests                        |
+| `pnpm run build`    | Compile the TypeScript sources into `gentle-alerts/` |
+| `pnpm run eslint`   | Type check with `tsc` and lint the extension and tests |
 | `pnpm run wdio`     | Run the WebdriverIO browser test suite              |
 | `pnpm test`         | `build` + `eslint` + `wdio`                         |
 | `pnpm run package`  | Clean, build, and produce `gentle-alerts.zip`       |
@@ -123,7 +126,7 @@ Node >=18 is required (see `engines` in `package.json`).
 
 ### Loading the extension locally
 
-1. `pnpm run build` to produce `gentle-alerts/gentle-alerts.min.js`.
+1. `pnpm run build` to produce the compiled files in `gentle-alerts/`.
 2. Open `chrome://extensions` and enable **Developer mode**.
 3. Click **Load unpacked** and select the `gentle-alerts/` directory.
 4. Visit any page that calls `alert()` — for example, open DevTools and

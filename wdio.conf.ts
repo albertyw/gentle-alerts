@@ -1,4 +1,10 @@
-export const config = {
+import type { Capabilities, Options } from "@wdio/types";
+
+// Options.Testrunner omits `capabilities`, which wdio declares separately, so
+// the config type is the intersection of the two.
+export const config: Options.Testrunner & {
+  capabilities: Capabilities.RequestedStandaloneCapabilities[];
+} = {
   //
   // ====================
   // Runner Configuration
@@ -27,7 +33,7 @@ export const config = {
   // of the config file unless it's absolute.
   //
   specs: [
-    './test/*.js'
+    './test/*.ts'
   ],
   // Patterns to exclude.
   exclude: [
@@ -59,7 +65,7 @@ export const config = {
     // maxInstances can get overwritten per capability. So if you have an in-house Selenium
     // grid with only 5 firefox instances available you can make sure that not more than
     // 5 instances get started at a time.
-    maxInstances: 5,
+    'wdio:maxInstances': 5,
     //
     browserName: 'firefox',
     'moz:firefoxOptions': {
@@ -119,8 +125,8 @@ export const config = {
   // package sets manually. Node 26 bundles undici v8, which enforces the Fetch
   // spec and rejects these forbidden request headers with UND_ERR_INVALID_ARG,
   // breaking session creation. See https://github.com/webdriverio/webdriverio/issues/15265
-  transformRequest: (requestOptions) => {
-    const headers = requestOptions.headers;
+  transformRequest: (requestOptions: RequestInit): RequestInit => {
+    const headers = requestOptions.headers as Headers | undefined;
     headers?.delete('content-length');
     headers?.delete('connection');
     return requestOptions;
