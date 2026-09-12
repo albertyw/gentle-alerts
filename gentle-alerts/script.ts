@@ -4,6 +4,7 @@ import {
   defaultOptions,
 } from "./config";
 import modalCSS from "./gentle-alerts.css?raw";
+import notificationAudio from "./notification.ogg";
 
 // HTML to show the modal
 export const modalHTML = "\
@@ -97,8 +98,8 @@ export function receiveConfig(event: Event): void {
 // Frequency at which the audio notification sounds
 type AudioNotificationFrequency = "none" | "once" | "repeating";
 let audioNotificationFrequency = defaultOptions.audioNotificationFrequency as AudioNotificationFrequency;
-// Location of audio file to be played during audio notification
-let audioNotificationFile: string | undefined = undefined;
+// Audio played during a notification, inlined into the bundle as a data URI
+let audioNotificationFile: string | undefined = notificationAudio;
 
 // Set the audio file played during a notification.  Exported for the same
 // reason as setModalTimeout: ES module bindings are read-only for importers.
@@ -246,7 +247,6 @@ function gentleAlert(msg: string): void {
     audioNotificationFrequency,
   ) as AudioNotificationFrequency;
   setModalTimeout(getConfig("modalTimeout", modalTimeout));
-  setAudioNotificationFile(getConfig("audioNotificationFile", audioNotificationFile));
   if (modal === undefined) {
     modal = new Modal();
   }

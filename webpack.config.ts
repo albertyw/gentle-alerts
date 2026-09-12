@@ -49,6 +49,12 @@ const config: Configuration = {
         resourceQuery: /^\?raw$/,
         type: "asset/source",
       },
+      {
+        // Inlined rather than emitted: an extension URL passed to new Audio()
+        // is a page-context request, and so a row in the Network panel
+        test: /\.ogg$/i,
+        type: "asset/inline",
+      },
 
       // Add your rules for custom modules here
       // Learn more about loaders from https://webpack.js.org/loaders/

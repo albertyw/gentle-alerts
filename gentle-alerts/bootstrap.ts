@@ -12,14 +12,8 @@ import {
 let options: StoredOptions | undefined = undefined;
 
 function sendOptions(): void {
-  // The audio file's URL is not a stored option, but resolving it also needs
-  // chrome.*, so it travels with the options
-  const config = {
-    ...options,
-    audioNotificationFile: chrome.runtime.getURL("notification.ogg"),
-  };
   document.dispatchEvent(new CustomEvent(configEventName, {
-    detail: JSON.stringify(config),
+    detail: JSON.stringify(options),
   }));
 }
 

@@ -31,10 +31,6 @@
   "host_permissions": [
     "<all_urls>"
   ],
-  "web_accessible_resources": [{
-    "resources": ["notification.ogg"],
-    "matches": ["<all_urls>"]
-  }],
   "options_ui": {
     "page": "options.htm"
   }
