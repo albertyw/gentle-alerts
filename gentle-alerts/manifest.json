@@ -16,7 +16,12 @@
   "content_scripts": [{
     "matches": ["<all_urls>"],
     "js": ["bootstrap.js"]
+  }, {
+    "matches": ["<all_urls>"],
+    "js": ["gentle-alerts.min.js"],
+    "world": "MAIN"
   }],
+  "minimum_chrome_version": "111",
   "homepage_url": "https://github.com/albertyw/gentle-alerts",
   "offline_enabled": true,
   "permissions": [
@@ -27,7 +32,7 @@
     "<all_urls>"
   ],
   "web_accessible_resources": [{
-    "resources": ["gentle-alerts.min.js", "notification.ogg"],
+    "resources": ["notification.ogg"],
     "matches": ["<all_urls>"]
   }],
   "options_ui": {

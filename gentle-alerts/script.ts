@@ -1,3 +1,8 @@
+import {
+  configEventName,
+  configRequestEventName,
+  defaultOptions,
+} from "./config";
 import modalCSS from "./gentle-alerts.css?raw";
 
 // HTML to show the modal
@@ -7,8 +12,11 @@ export const modalHTML = "\
 </div>";
 // Global Modal value so that modal messages can be queued
 let modal: Modal | undefined = undefined;
-// Location to read user configs
-const currentScript = document.currentScript;
+// User configs, sent over a DOM event by bootstrap.ts.  This script is injected
+// into the page's main world, so it has neither the chrome.* APIs to read them
+// itself nor a currentScript to hang a dataset off of.  The page can forge the
+// event, but the options only choose a timeout and a notification sound.
+const config: Record<string, string> = {};
 
 // Interval to wait within a double flash
 export const flashInterval = 1250;
@@ -17,12 +25,12 @@ const flashWaitMultiple = 6;
 
 // Time to wait until notification disappears
 // A value of 0 disables auto-closing, as documented in options.htm
-export let modalTimeout = 30 * 60 * 1000;
+export let modalTimeout = defaultOptions.modalTimeout;
 
 // Set the time to wait until the notification disappears.  Exported because ES
 // module bindings are read-only for importers, so callers outside this module
-// need a setter rather than assigning to the binding directly.  Values read from
-// a script tag's dataset arrive as strings, so normalize to a number here.
+// need a setter rather than assigning to the binding directly.  Config values
+// arrive as strings, so normalize to a number here.
 export function setModalTimeout(value: number | string): void {
   modalTimeout = Number(value);
 }
@@ -39,9 +47,9 @@ type WindowEventName = "onclick" | "onkeyup";
 // assigning one shared handler to either needs an indexable view of window
 type WindowEventHandlers = Record<WindowEventName, unknown>;
 
-// getConfig function to read data attributes from the script tag
+// getConfig function to read a user config, falling back to a default
 function getConfig<T>(property: string, defaultValue: T): string | T {
-  const value = currentScript?.dataset?.[property];
+  const value = config[property];
   if (value) {
     return value;
   }
@@ -65,11 +73,32 @@ function injectCSS(): void {
   cssInjected = true;
 }
 
+// Store the options carried by a config event.  Exported for testing; the
+// listener below is what bootstrap.ts actually reaches.
+export function receiveConfig(event: Event): void {
+  const detail = (event as CustomEvent<unknown>).detail;
+  if (typeof detail !== "string") {
+    return;
+  }
+  let options: unknown;
+  try {
+    options = JSON.parse(detail);
+  } catch {
+    return;
+  }
+  if (typeof options !== "object" || options === null) {
+    return;
+  }
+  Object.entries(options).forEach(function([key, value]) {
+    config[key] = String(value);
+  });
+}
+
 // Frequency at which the audio notification sounds
 type AudioNotificationFrequency = "none" | "once" | "repeating";
-let audioNotificationFrequency: AudioNotificationFrequency = "once";
+let audioNotificationFrequency = defaultOptions.audioNotificationFrequency as AudioNotificationFrequency;
 // Location of audio file to be played during audio notification
-let audioNotificationFile = getConfig("audioNotificationFile", undefined);
+let audioNotificationFile: string | undefined = undefined;
 
 // Set the audio file played during a notification.  Exported for the same
 // reason as setModalTimeout: ES module bindings are read-only for importers.
@@ -210,13 +239,14 @@ export class Modal {
 
 function gentleAlert(msg: string): void {
   injectCSS();
-  // The dataset value is unvalidated user config; an unrecognized frequency
+  // The config value is unvalidated; an unrecognized frequency
   // simply matches none of the comparisons in notify() and plays no audio
   audioNotificationFrequency = getConfig(
     "audioNotificationFrequency",
     audioNotificationFrequency,
   ) as AudioNotificationFrequency;
   setModalTimeout(getConfig("modalTimeout", modalTimeout));
+  setAudioNotificationFile(getConfig("audioNotificationFile", audioNotificationFile));
   if (modal === undefined) {
     modal = new Modal();
   }
@@ -225,4 +255,8 @@ function gentleAlert(msg: string): void {
 
 if (typeof window !== "undefined" && typeof window.alert !== "undefined") {
   window.alert = gentleAlert;
+  document.addEventListener(configEventName, receiveConfig);
+  // bootstrap.ts may have already sent the options before this script was
+  // injected, so ask rather than wait
+  document.dispatchEvent(new Event(configRequestEventName));
 }

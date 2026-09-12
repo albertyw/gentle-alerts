@@ -2,8 +2,15 @@ import $ from "jquery";
 import { expect } from "chai";
 import sinon from "sinon";
 
+import { configEventName } from "../gentle-alerts/config";
 import * as script from "../gentle-alerts/script";
 const Modal = script.Modal;
+
+// Deliver options the way bootstrap.ts does, over a DOM event with a JSON
+// string detail, so the tests exercise the real cross-world handoff
+function sendConfig(detail: unknown) {
+  document.dispatchEvent(new CustomEvent(configEventName, {detail: detail}));
+}
 
 // Module-scoped rather than hung off `this`: a module's top-level `this` is not
 // a usable context object, so strict TypeScript rejects reading properties from
@@ -176,5 +183,44 @@ describe("audio notification", function() {
     clock.tick(script.flashInterval * 20);
     expect(playCount).to.equal(1);
     await Promise.resolve($("#gentle-alerts-modal").trigger("click"));
+  });
+});
+
+describe("config", function() {
+  let originalModalTimeout: number;
+  beforeEach(() => {
+    clock = sinon.useFakeTimers();
+    resetModals();
+    originalModalTimeout = script.modalTimeout;
+  });
+  afterEach(async () => {
+    sendConfig(JSON.stringify({modalTimeout: originalModalTimeout}));
+    alert("restore config");
+    await Promise.resolve($("#gentle-alerts-modal").trigger("click"));
+    clock.restore();
+  });
+  async function alertAndClose() {
+    alert("alert text");
+    await Promise.resolve($("#gentle-alerts-modal").trigger("click"));
+  }
+  it("applies options sent from the isolated world", async () => {
+    sendConfig(JSON.stringify({modalTimeout: 1234}));
+    await alertAndClose();
+    expect(script.modalTimeout).to.equal(1234);
+  });
+  it("ignores a detail that is not a string", async () => {
+    sendConfig({modalTimeout: 1234});
+    await alertAndClose();
+    expect(script.modalTimeout).to.equal(originalModalTimeout);
+  });
+  it("ignores a detail that is not valid JSON", async () => {
+    sendConfig("not json");
+    await alertAndClose();
+    expect(script.modalTimeout).to.equal(originalModalTimeout);
+  });
+  it("ignores a detail that is not a JSON object", async () => {
+    sendConfig("42");
+    await alertAndClose();
+    expect(script.modalTimeout).to.equal(originalModalTimeout);
   });
 });
