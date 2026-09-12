@@ -5,10 +5,13 @@ import path from "path";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 
 const config = {
-  entry: "./gentle-alerts/script.js",
+  entry: "./gentle-alerts/script.ts",
   mode: "production",
   output: {
     path: path.resolve("dist"),
+  },
+  resolve: {
+    extensions: [".ts", ".js"],
   },
   plugins: [
     // Add your plugins here
@@ -16,6 +19,16 @@ const config = {
   ],
   module: {
     rules: [
+      {
+        test: /\.ts$/i,
+        loader: "ts-loader",
+        options: {
+          onlyCompileBundledFiles: true,
+          compilerOptions: {
+            noEmit: false,
+          },
+        },
+      },
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
         type: "asset",
