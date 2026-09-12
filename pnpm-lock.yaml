@@ -41,6 +41,9 @@ importers:
       '@wdio/spec-reporter':
         specifier: ^9.27.2
         version: 9.27.2
+      '@wdio/types':
+        specifier: ^9.31.2
+        version: 9.31.2
       chai:
         specifier: ^6.2.2
         version: 6.2.2
@@ -1301,6 +1304,10 @@ packages:
 
   '@wdio/types@9.27.2':
     resolution: {integrity: sha512-nBUq2juoaaibrOacn/cZ5IjZvJa6ZAHlh1B4UjMxOVcd7kzZyXJjfwAP3vNnboK4dyCLHyKLM+TpfFMmoO59OQ==}
+    engines: {node: '>=18.20.0'}
+
+  '@wdio/types@9.31.2':
+    resolution: {integrity: sha512-lQKaiQDCJJ6VC1K/cKzaAxCpwB9pL1U0VbmX2uGksMxO4EDbNuLvIxWryuUDJ7OaSYTjxILTKYFErdbT/xEikg==}
     engines: {node: '>=18.20.0'}
 
   '@wdio/utils@9.27.2':
@@ -5207,6 +5214,10 @@ snapshots:
       pretty-ms: 9.3.0
 
   '@wdio/types@9.27.2':
+    dependencies:
+      '@types/node': 20.19.42
+
+  '@wdio/types@9.31.2':
     dependencies:
       '@types/node': 20.19.42
 

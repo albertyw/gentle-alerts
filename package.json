@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "test": "pnpm run build && pnpm run eslint && pnpm run wdio",
-    "eslint": "tsc --noEmit && eslint -c .eslint.config.js gentle-alerts test",
+    "eslint": "tsc --noEmit && eslint -c .eslint.config.ts gentle-alerts test",
     "package": "pnpm run clean && pnpm run build && zip -r gentle-alerts.zip gentle-alerts",
     "clean": "rm -f gentle-alerts/gentle-alerts.min.js gentle-alerts/bootstrap.js gentle-alerts/options.js && rm -f gentle-alerts.zip && find | grep DS | xargs rm -f",
     "build": "webpack",
-    "wdio": "wdio run ./wdio.conf.js"
+    "wdio": "wdio run ./wdio.conf.ts"
   },
   "repository": {
     "type": "git",
@@ -33,6 +33,7 @@
     "@wdio/cli": "^9.27.2",
     "@wdio/mocha-framework": "^9.27.2",
     "@wdio/spec-reporter": "^9.27.2",
+    "@wdio/types": "^9.31.2",
     "chai": "^6.2.2",
     "css-minimizer-webpack-plugin": "^8.0.0",
     "eslint": "^10.4.1",
