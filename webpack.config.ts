@@ -42,6 +42,13 @@ const config: Configuration = {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
         type: "asset",
       },
+      {
+        // `?raw` is Vite's convention for importing a file's text, and the wdio
+        // browser runner is Vite, so teaching webpack the same query keeps one
+        // import working in both
+        resourceQuery: /^\?raw$/,
+        type: "asset/source",
+      },
 
       // Add your rules for custom modules here
       // Learn more about loaders from https://webpack.js.org/loaders/

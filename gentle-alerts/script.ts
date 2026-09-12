@@ -1,3 +1,5 @@
+import modalCSS from "./gentle-alerts.css?raw";
+
 // HTML to show the modal
 export const modalHTML = "\
 <div id=\"gentle-alerts-modal-content\">\
@@ -48,6 +50,20 @@ function getConfig<T>(property: string, defaultValue: T): string | T {
 
 // Track whether the CSS has already been injected
 let cssInjected = false;
+
+// Add the modal's styles to the page.  The stylesheet is bundled into this
+// script as text rather than fetched over a chrome-extension:// URL, which
+// would show up in the page's DevTools Network list.  It stays deferred until
+// the first alert so that pages without alerts are left untouched.
+function injectCSS(): void {
+  if (cssInjected) {
+    return;
+  }
+  const style = document.createElement("style");
+  style.textContent = modalCSS;
+  (document.head||document.documentElement).appendChild(style);
+  cssInjected = true;
+}
 
 // Frequency at which the audio notification sounds
 type AudioNotificationFrequency = "none" | "once" | "repeating";
@@ -193,15 +209,7 @@ export class Modal {
 }
 
 function gentleAlert(msg: string): void {
-  const cssPath = getConfig("cssPath", "");
-  if (cssPath && !cssInjected) {
-    const c = document.createElement("link");
-    c.rel = "stylesheet";
-    c.href = cssPath;
-    (document.head||document.documentElement).appendChild(c);
-    cssInjected = true;
-  }
-
+  injectCSS();
   // The dataset value is unvalidated user config; an unrecognized frequency
   // simply matches none of the comparisons in notify() and plays no audio
   audioNotificationFrequency = getConfig(

@@ -27,7 +27,7 @@
     "<all_urls>"
   ],
   "web_accessible_resources": [{
-    "resources": ["gentle-alerts.min.js", "gentle-alerts.css", "notification.ogg"],
+    "resources": ["gentle-alerts.min.js", "notification.ogg"],
     "matches": ["<all_urls>"]
   }],
   "options_ui": {

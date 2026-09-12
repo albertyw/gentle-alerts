@@ -130,6 +130,21 @@ describe("alert", function() {
   });
 });
 
+describe("CSS", function() {
+  beforeEach(resetModals);
+  function modalStyles() {
+    return Array.from(document.querySelectorAll("style"))
+      .filter((style) => (style.textContent ?? "").includes("#gentle-alerts-modal"));
+  }
+  it("is injected once, on the first alert", async function() {
+    alert("alert text");
+    await Promise.resolve($("#gentle-alerts-modal").trigger("click"));
+    alert("alert text");
+    await Promise.resolve($("#gentle-alerts-modal").trigger("click"));
+    expect(modalStyles()).to.have.lengthOf(1);
+  });
+});
+
 describe("audio notification", function() {
   let playCount: number;
   let originalAudio: typeof Audio;
