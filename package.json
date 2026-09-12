@@ -23,6 +23,12 @@
   "homepage": "https://github.com/albertyw/gentle-alerts#readme",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@types/chai": "^5.2.3",
+    "@types/chrome": "^0.2.9",
+    "@types/jquery": "^4.0.1",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^26.4.1",
+    "@types/sinon": "^22.0.0",
     "@wdio/browser-runner": "^9.27.2",
     "@wdio/cli": "^9.27.2",
     "@wdio/mocha-framework": "^9.27.2",
@@ -33,6 +39,10 @@
     "globals": "^17.6.0",
     "jquery": "^4.0.0",
     "sinon": "^22.0.0",
+    "ts-loader": "^9.6.2",
+    "tsx": "^4.23.13",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.69.0",
     "webpack": "^5.107.2",
     "webpack-cli": "^7.0.3"
   },

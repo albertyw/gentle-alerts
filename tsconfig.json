@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "strict": true,
+    "target": "es2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+    "types": ["chrome", "mocha", "node"]
+  },
+  "include": [
+    "gentle-alerts/*.ts",
+    "test/*.ts",
+    "*.config.ts",
+    "wdio.conf.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}
