@@ -65,8 +65,8 @@ for every site that still relies on native alerts.
 
 Gentle Alerts does not collect, transmit, or sell your data.  It does not
 read page content, does not track browsing history, and does not phone
-home.  The only things it stores are your own preferences, kept locally in
-your browser.  See [PRIVACY.md](PRIVACY.md) for the full privacy policy.
+home.  The only things it stores are your own preferences, which Chrome
+syncs across your signed-in browsers if Chrome sync is enabled.  See [PRIVACY.md](PRIVACY.md) for the full privacy policy.
 
 ### Open source
 
