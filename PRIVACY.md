@@ -33,8 +33,8 @@ For details on how Google handles this data, see Google's privacy policy:
 
 The extension requests the following Chrome permissions:
 
-- `tabs` and `<all_urls>` — required to inject the gentle-alert modal into
-  pages that would otherwise show a native browser alert.
+- Access to all sites (`<all_urls>`, through its content scripts) — required
+  to replace native browser alerts with the gentle-alert modal on any page.
 - `storage` — used to save your preferences.  They are synced by Chrome to
   your other signed-in browsers when Chrome sync is enabled, and are never
   sent anywhere else.
