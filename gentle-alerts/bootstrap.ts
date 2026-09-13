@@ -1,25 +1,34 @@
-// A type alias rather than an interface: only aliases get the implicit index
-// signature that chrome.storage.sync.get's parameter type requires.
-type StoredOptions = {
-  audioNotificationFrequency: string;
-  modalTimeout: number;
-};
+import {
+  configEventName,
+  configRequestEventName,
+  defaultOptions,
+  type StoredOptions,
+} from "./config";
 
-const defaultOptions: StoredOptions = {
-  audioNotificationFrequency: "once",
-  modalTimeout: 30 * 60 * 1000,
-};
+// script.ts is injected into the page's main world straight from the manifest,
+// which keeps it out of the DevTools Network list but also leaves it without
+// the chrome.* APIs.  This isolated-world script is the half that can read the
+// user's options, so it hands them over as a DOM event.
+let options: StoredOptions | undefined = undefined;
 
-// Install Javascript
-const s = document.createElement("script");
-s.src = chrome.runtime.getURL("gentle-alerts.min.js");
-s.dataset.audioNotificationFile = chrome.runtime.getURL("notification.ogg");
-s.dataset["cssPath"] = chrome.runtime.getURL("gentle-alerts.css");
+function sendOptions(): void {
+  document.dispatchEvent(new CustomEvent(configEventName, {
+    detail: JSON.stringify(options),
+  }));
+}
 
-// Read configs before appending so script.ts sees all dataset values on load
-chrome.storage.sync.get(defaultOptions, function(items) {
-  (Object.keys(defaultOptions) as (keyof StoredOptions)[]).forEach(function (key) {
-    s.dataset[key] = String(items[key]);
+function loadAndSendOptions(): void {
+  if (options) {
+    sendOptions();
+    return;
+  }
+  chrome.storage.sync.get(defaultOptions, function(items) {
+    options = items as StoredOptions;
+    sendOptions();
   });
-  (document.head||document.documentElement).appendChild(s);
-});
+}
+
+// Answer script.ts whenever it asks, so neither script depends on being
+// injected before the other
+document.addEventListener(configRequestEventName, loadAndSendOptions);
+loadAndSendOptions();

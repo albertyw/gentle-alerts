@@ -2,8 +2,15 @@ import $ from "jquery";
 import { expect } from "chai";
 import sinon from "sinon";
 
+import { configEventName, defaultOptions } from "../gentle-alerts/config";
 import * as script from "../gentle-alerts/script";
 const Modal = script.Modal;
+
+// Deliver options the way bootstrap.ts does, over a DOM event with a JSON
+// string detail, so the tests exercise the real cross-world handoff
+function sendConfig(detail: unknown) {
+  document.dispatchEvent(new CustomEvent(configEventName, {detail: detail}));
+}
 
 // Module-scoped rather than hung off `this`: a module's top-level `this` is not
 // a usable context object, so strict TypeScript rejects reading properties from
@@ -13,6 +20,21 @@ let clock: sinon.SinonFakeTimers;
 function resetModals() {
   $("#gentle-alerts-modal").remove();
 }
+
+// Runs first on purpose: script.ts is injected at document_start and overrides
+// window.alert immediately, so an alert can fire before bootstrap.ts has read
+// chrome.storage and sent any config.  This suite is the only point in the file
+// where no config event has been delivered yet.
+describe("alerts fired before any config arrives", function() {
+  beforeEach(resetModals);
+  it("uses the default options", async function() {
+    expect(script.modalTimeout).to.equal(defaultOptions.modalTimeout);
+    alert("alert text");
+    expect($("#gentle-alerts-modal-content-text").text()).to.equal("alert text");
+    expect(script.modalTimeout).to.equal(defaultOptions.modalTimeout);
+    await Promise.resolve($("#gentle-alerts-modal").trigger("click"));
+  });
+});
 
 describe("modalHTML", function() {
   beforeEach(resetModals);
@@ -130,6 +152,21 @@ describe("alert", function() {
   });
 });
 
+describe("CSS", function() {
+  beforeEach(resetModals);
+  function modalStyles() {
+    return Array.from(document.querySelectorAll("style"))
+      .filter((style) => (style.textContent ?? "").includes("#gentle-alerts-modal"));
+  }
+  it("is injected once, on the first alert", async function() {
+    alert("alert text");
+    await Promise.resolve($("#gentle-alerts-modal").trigger("click"));
+    alert("alert text");
+    await Promise.resolve($("#gentle-alerts-modal").trigger("click"));
+    expect(modalStyles()).to.have.lengthOf(1);
+  });
+});
+
 describe("audio notification", function() {
   let playCount: number;
   let originalAudio: typeof Audio;
@@ -161,5 +198,44 @@ describe("audio notification", function() {
     clock.tick(script.flashInterval * 20);
     expect(playCount).to.equal(1);
     await Promise.resolve($("#gentle-alerts-modal").trigger("click"));
+  });
+});
+
+describe("config", function() {
+  let originalModalTimeout: number;
+  beforeEach(() => {
+    clock = sinon.useFakeTimers();
+    resetModals();
+    originalModalTimeout = script.modalTimeout;
+  });
+  afterEach(async () => {
+    sendConfig(JSON.stringify({modalTimeout: originalModalTimeout}));
+    alert("restore config");
+    await Promise.resolve($("#gentle-alerts-modal").trigger("click"));
+    clock.restore();
+  });
+  async function alertAndClose() {
+    alert("alert text");
+    await Promise.resolve($("#gentle-alerts-modal").trigger("click"));
+  }
+  it("applies options sent from the isolated world", async () => {
+    sendConfig(JSON.stringify({modalTimeout: 1234}));
+    await alertAndClose();
+    expect(script.modalTimeout).to.equal(1234);
+  });
+  it("ignores a detail that is not a string", async () => {
+    sendConfig({modalTimeout: 1234});
+    await alertAndClose();
+    expect(script.modalTimeout).to.equal(originalModalTimeout);
+  });
+  it("ignores a detail that is not valid JSON", async () => {
+    sendConfig("not json");
+    await alertAndClose();
+    expect(script.modalTimeout).to.equal(originalModalTimeout);
+  });
+  it("ignores a detail that is not a JSON object", async () => {
+    sendConfig("42");
+    await alertAndClose();
+    expect(script.modalTimeout).to.equal(originalModalTimeout);
   });
 });

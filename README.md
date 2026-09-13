@@ -89,13 +89,27 @@ browser, so modern syntax is safe).
 
 - `gentle-alerts/` — the extension itself (the directory that gets zipped
   and uploaded to the Chrome Web Store).
-  - `manifest.json` — Manifest V3 declaration.
-  - `bootstrap.ts` — content script registered for `<all_urls>`; injects
-    `gentle-alerts.min.js` into the page.
+  - `manifest.json` — Manifest V3 declaration.  It registers two content
+    scripts for `<all_urls>` at `document_start`: `bootstrap.js` in the
+    isolated world and `gentle-alerts.min.js` in the page's main world.
+    Injecting the main-world script from the manifest, rather than appending
+    a `<script src="chrome-extension://…">` tag to the page, keeps the
+    extension out of the page's DevTools Network list and out of
+    `web_accessible_resources`, which no longer exists.
+  - `bootstrap.ts` — the isolated-world half.  The main world has no
+    `chrome.*` APIs, so this reads the user's options out of
+    `chrome.storage.sync` and hands them to `script.ts` over a DOM event
+    (`gentle-alerts-config`, with a JSON string detail).
   - `script.ts` — main source; intercepts `alert`/`confirm`/`prompt` and
-    renders the modal.
-  - `gentle-alerts.css` — modal styling.
-  - `notification.ogg` — chime played when a modal opens.
+    renders the modal.  It overrides `window.alert` immediately using the
+    defaults in `config.ts`, then applies the real options when they arrive.
+  - `config.ts` — the vocabulary the two worlds share: event names, the
+    stored option shape, and the defaults.
+  - `gentle-alerts.css` — modal styling.  Bundled into `gentle-alerts.min.js`
+    as text and injected as a `<style>` element on the first alert, so pages
+    without alerts are left untouched.
+  - `notification.ogg` — chime played when a modal opens.  Bundled as a
+    `data:` URI so playing it makes no network request.
   - `options.htm` / `options.ts` — preferences page.
 - `test/` — WebdriverIO browser tests run with Mocha + Chai + Sinon.
 - `webpack.config.ts` — compiles `script.ts`, `bootstrap.ts`, and

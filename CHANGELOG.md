@@ -1,6 +1,16 @@
 Change Log
 ==========
 
+unreleased
+----------
+
+ - Stop appearing in the DevTools Network list of every page
+ - Inject the page-world script from the manifest instead of a script tag
+ - Bundle the modal CSS and the notification sound into the script
+ - Drop `web_accessible_resources`, so pages can no longer detect the extension
+ - Intercept alerts fired during page load
+
+
 v1.3.5 (2026-05-09)
 -------------------
 
