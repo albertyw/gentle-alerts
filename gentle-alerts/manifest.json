@@ -27,11 +27,7 @@
   "homepage_url": "https://github.com/albertyw/gentle-alerts",
   "offline_enabled": true,
   "permissions": [
-    "tabs",
     "storage"
-  ],
-  "host_permissions": [
-    "<all_urls>"
   ],
   "options_ui": {
     "page": "options.htm"

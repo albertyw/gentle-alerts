@@ -16,9 +16,9 @@ Google Chrome extension to convert alerts into gentle notifications.
 
 ## About
 
-Gentle Alerts replaces the harsh, attention-stealing native `alert()`,
-`confirm()`, and `prompt()` dialogs that web pages can pop up with calmer,
-in-page modals that respect what you're doing.
+Gentle Alerts replaces the harsh, attention-stealing native `alert()`
+dialogs that web pages can pop up with calmer, in-page modals that respect
+what you're doing.
 
 The native browser alert is a blunt instrument.  When a page calls it, the
 browser yanks focus to the tab, freezes the page, blocks every other tab in
@@ -35,18 +35,19 @@ until you actually look at it.
 
 ### What it does
 
-- **Intercepts native dialogs.**  `window.alert`, `window.confirm`, and
-  `window.prompt` are replaced with a styled in-page modal that delivers the
-  same message and return value the calling page expects.
+- **Intercepts native alerts.**  `window.alert` is replaced with a styled
+  in-page modal that shows the same message.  Multiple alerts are queued and
+  shown one at a time.  `window.confirm` and `window.prompt` are left
+  untouched.
 - **No forced tab switch.**  Background tabs no longer steal focus when they
   fire an alert.  The notification waits in its own tab.
-- **Plays a soft chime.**  When a modal opens it plays a gentle notification
-  sound so you know something needs your attention without being startled.
-- **Keyboard friendly.**  Dismiss the modal with `Enter`, `Escape`, or
-  `Space`.  No mouse aim required.
-- **Resists accidental dismissal.**  The modal won't close from a stray
-  click or keystroke while you're typing — useful when an alert fires in the
-  middle of an email or chat.
+- **Gets your attention gently.**  When a modal opens it plays a soft chime
+  and flashes the tab title with " - Alert" so you can spot which tab needs
+  you.  The chime can be set to play once, repeat, or stay silent.
+- **Easy to dismiss.**  Close the modal with `Enter`, `Escape`, or `Space`,
+  or by clicking the dimmed area around it.
+- **Closes on its own.**  Unattended modals close automatically after 30
+  minutes by default.  The timeout is configurable, or can be disabled.
 - **Works everywhere.**  It runs on every page (`<all_urls>`) and is
   particularly nice for Google Calendar event reminders, internal dashboards,
   and any legacy app that still uses `alert()`-based notifications.
@@ -58,14 +59,14 @@ used to show a soft, non-blocking notification when an event was about to
 start.  When the feature graduated from Google Labs, that gentle reminder
 was replaced with a hard browser alert that hijacks the foreground tab.
 Gentle Alerts brings the calmer behavior back — not just for Calendar, but
-for every site that still relies on native dialogs.
+for every site that still relies on native alerts.
 
 ### Privacy
 
 Gentle Alerts does not collect, transmit, or sell your data.  It does not
 read page content, does not track browsing history, and does not phone
-home.  The only things it stores are your own preferences, kept locally in
-your browser.  See [PRIVACY.md](PRIVACY.md) for the full privacy policy.
+home.  The only things it stores are your own preferences, which Chrome
+syncs across your signed-in browsers if Chrome sync is enabled.  See [PRIVACY.md](PRIVACY.md) for the full privacy policy.
 
 ### Open source
 
@@ -100,9 +101,9 @@ browser, so modern syntax is safe).
     `chrome.*` APIs, so this reads the user's options out of
     `chrome.storage.sync` and hands them to `script.ts` over a DOM event
     (`gentle-alerts-config`, with a JSON string detail).
-  - `script.ts` — main source; intercepts `alert`/`confirm`/`prompt` and
-    renders the modal.  It overrides `window.alert` immediately using the
-    defaults in `config.ts`, then applies the real options when they arrive.
+  - `script.ts` — main source; intercepts `alert` and renders the modal.  It
+    overrides `window.alert` immediately using the defaults in `config.ts`,
+    then applies the real options when they arrive.
   - `config.ts` — the vocabulary the two worlds share: event names, the
     stored option shape, and the defaults.
   - `gentle-alerts.css` — modal styling.  Bundled into `gentle-alerts.min.js`
