@@ -15,4 +15,5 @@ steps:
       - pnpm test
       - ~/.qlty/bin/qlty coverage publish .coverage/clover.xml --override-commit-sha "$DRONE_COMMIT_SHA" --override-branch "$DRONE_BRANCH" --override-build-id "$DRONE_BUILD_NUMBER"
     environment:
-      QLTY_COVERAGE_TOKEN: qltcp_qH9pUuLeBSudET4U
+      QLTY_COVERAGE_TOKEN:
+        from_secret: qlty_coverage_token
